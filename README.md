@@ -17,10 +17,10 @@ Microservice to provide the reservations and calendar components to the L'AirDnD
 
 ## Usage
 
-1. DB Schema and Seeding
+1. DB Schema and Seeding<br />
 To run `npm run dbSetup`, you will need to create a `creds.txt` file and a `config.js file` in the root folder of the service that follows the following formats *(Note: Delete </> brackets when filling in your details)*:
-```sh
-# creds.js
+```txt
+# creds.txt
 [client]
 user=<your_username_here>
 password=<your_password_here>
@@ -34,10 +34,10 @@ module.exports = {
   MYSQL_DB_NAME: <your_db_name>,
 };
 ```
-2. Compiling Webpack
+2. Compiling Webpack<br />
 In a separate terminal window, navigate to the root folder of this service and run `npm run build`. This will run the `webpack -d --watch` command.
 
-3. Running the server
+3. Running the server<br />
 In a separate terminal window, navigate to the root folder of this service and run `npm start`. This will start the service on PORT 3003.
 
 
