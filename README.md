@@ -18,19 +18,30 @@ Microservice to provide the reservations and calendar components to the L'AirDnD
 ## Usage
 
 1. DB Schema and Seeding
-To run `npm run dbSetup`, you will need to create a `creds.txt` file that follows the following format:
-`
+To run `npm run dbSetup`, you will need to create a `creds.txt` file and a `config.js file` in the root folder of the service that follows the following formats *(Note: Delete </> brackets when filling in your details)*:
+```sh
+# creds.js
 [client]
-user={your_username_here}
-password={your_password_here}
-`
+user=<your_username_here>
+password=<your_password_here>
+```
+```js
+// config.js
+module.exports = {
+  MYSQL_HOST: <your_hostname>,
+  MYSQL_USER: <your_username>,
+  MYSQL_PASSWORD: <your_password>,
+  MYSQL_DB_NAME: <your_db_name>,
+};
+```
+2. Compiling Webpack
+In a separate terminal window, navigate to the root folder of this service and run `npm run build`. This will run the `webpack -d --watch` command.
+
+3. Running the server
+In a separate terminal window, navigate to the root folder of this service and run `npm start`. This will start the service on PORT 3003.
+
 
 ## Requirements
-
-An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
-
-- Node 6.13.0
-- etc
 
 ## Development
 
@@ -39,6 +50,5 @@ An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
 From within the root directory:
 
 ```sh
-npm install -g webpack
 npm install
 ```
