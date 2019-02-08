@@ -1,0 +1,40 @@
+{
+  "name": "ecuyle-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "resetDB": "mysql --defaults-extra-file=creds.txt < schema.sql",
+    "seed": "node seeder.js",
+    "dbSetup": "npm run resetDB & npm run seed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/L-AirDnD/ecuyle-service.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/L-AirDnD/ecuyle-service/issues"
+  },
+  "homepage": "https://github.com/L-AirDnD/ecuyle-service#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "faker": "^4.1.0",
+    "mysql": "^2.16.0",
+    "path": "^0.12.7",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
+    "url": "^0.11.0",
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.2.3"
+  },
+  "devDependencies": {
+    "eslint": "^5.13.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4"
+  }
+}
