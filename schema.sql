@@ -58,20 +58,24 @@ CREATE TABLE reservations (
 /* -------------------------------------------------------*/
 /*                      Create views                      */
 /* -------------------------------------------------------*/
-/* CREATE VIEW AverageRatings AS
-	SELECT AVG(
-					SUM(r.accuracy)
-				+ SUM(r.communication)
-				+ SUM(r.cleanliness)
-				+ SUM(r.location)
-				+ SUM(r.check_in)
-				+ SUM(r.value)
+CREATE VIEW AverageRatings AS
+	SELECT r.offerings_id,
+	       AVG(
+					r.accuracy
+				+ r.communication
+				+ r.cleanliness
+				+ r.location
+				+ r.check_in
+				+ r.value
 					) AS average_rating
-		FROM reviews r;
+		FROM reviews r
+	 GROUP BY r.offerings_id;
 
 CREATE VIEW TotalReviews AS 
-	SELECT COUNT(r.id)
-		FROM reviews r;
+	SELECT r.offerings_id,
+				 COUNT(r.id) AS total_review_count
+		FROM reviews r
+	 GROUP BY r.offerings_id;
 
 CREATE VIEW OfferingSummary AS 
 	SELECT o.id AS offeringId,
@@ -83,12 +87,8 @@ CREATE VIEW OfferingSummary AS
 				 o.weekly_view_count AS weeklyViewCount,
 				 ar.average_rating AS averageRating,
 				 tr.total_review_count AS totalReviewCount
-				 (SELECT COUNT(r.id)
-				    FROM reviews r
-					 WHERE r.offeringId = o.id) AS totalReviewCount
-	  FROM offerings o; */
-
-/* -------------------------------------------------------*/
-/*                   Insert rows below                    */
-/* -------------------------------------------------------*/
-INSERT INTO 
+	  FROM offerings o
+	 INNER JOIN AverageRatings ar
+	    ON (ar.offerings_id=o.id)
+	 INNER JOIN TotalReviews tr
+	    ON (tr.offerings_id=o.id);
