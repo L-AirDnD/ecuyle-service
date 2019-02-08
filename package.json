@@ -5,6 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "build": "webpack -d --watch",
     "resetDB": "mysql --defaults-extra-file=creds.txt < schema.sql",
     "seed": "node seeder.js",
     "dbSetup": "npm run resetDB & npm run seed"
@@ -31,6 +33,10 @@
     "webpack-cli": "^3.2.3"
   },
   "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
     "eslint": "^5.13.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.16.0",

@@ -2,3 +2,4 @@ node_modules
 package-lock.json
 creds.txt
 config.js
+dist/bundle.js
