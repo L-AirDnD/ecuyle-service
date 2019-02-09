@@ -64,4 +64,15 @@ module.exports = {
       }
     });
   }),
+  getOfferingDetails: offeringId => new Promise((resolve, reject) => {
+    const queryString = 'SELECT * FROM OfferingSummary WHERE offeringId=?';
+    const queryArgs = [offeringId];
+    db.query(queryString, queryArgs, (err, results) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(results);
+      }
+    });
+  }),
 };

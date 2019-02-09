@@ -60,16 +60,15 @@ CREATE TABLE reservations (
 /* -------------------------------------------------------*/
 CREATE VIEW AverageRatings AS
 	SELECT r.offerings_id,
-	       AVG(
+	       ((
 					r.accuracy
 				+ r.communication
 				+ r.cleanliness
 				+ r.location
 				+ r.check_in
 				+ r.value
-					) AS average_rating
-		FROM reviews r
-	 GROUP BY r.offerings_id;
+					) / 6) AS average_rating
+		FROM reviews r;
 
 CREATE VIEW TotalReviews AS 
 	SELECT r.offerings_id,
@@ -85,10 +84,11 @@ CREATE VIEW OfferingSummary AS
 				 o.max_guests AS maxGuests,
 				 o.max_infants AS maxInfants,
 				 o.weekly_view_count AS weeklyViewCount,
-				 ar.average_rating AS averageRating,
+				 AVG(ar.average_rating) AS averageRating,
 				 tr.total_review_count AS totalReviewCount
 	  FROM offerings o
 	 INNER JOIN AverageRatings ar
 	    ON (ar.offerings_id=o.id)
 	 INNER JOIN TotalReviews tr
-	    ON (tr.offerings_id=o.id);
+	    ON (tr.offerings_id=o.id)
+	 GROUP BY o.id;

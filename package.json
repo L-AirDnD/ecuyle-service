@@ -8,7 +8,7 @@
     "start": "node server/server.js",
     "nstart": "nodemon server/server/js",
     "build": "webpack -d --watch",
-    "resetDB": "mysql --defaults-extra-file=creds.txt < server/schema.sql",
+    "resetDB": "mysql --defaults-extra-file=server/creds.txt < server/schema.sql",
     "seed": "node server/seeder.js",
     "dbSetup": "npm run resetDB & npm run seed"
   },
