@@ -5,6 +5,8 @@ import GuestPicker from './GuestPicker';
 import ReservationConfirmation from './ReservationConfirmation';
 import ReservationHook from './ReservationHook';
 
+import StyledReservation from '../styles/Reservation';
+
 class Reservation extends React.Component {
   constructor(props) {
     super(props);
@@ -13,13 +15,13 @@ class Reservation extends React.Component {
 
   render() {
     return (
-      <div className="reservation">
+      <StyledReservation>
         <ReservationDetails />
         <DatePicker />
         <GuestPicker />
         <ReservationConfirmation />
         <ReservationHook />
-      </div>
+      </StyledReservation>
     );
   }
 }
