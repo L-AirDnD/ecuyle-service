@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import path from 'path';
 
 export const colors = {
   rausch: '#FF5A5F',
@@ -138,7 +139,7 @@ export const StyledHookRight = styled.div`
   width: 25%;
 `;
 
-export const Star = styled(Text)`
+export const Stars = styled(Text)`
   color: ${colors.babu};
   margin-left: 5px;
   margin-right: 5px;

@@ -13,7 +13,7 @@ const ReservationConfirmation = (props) => {
         <StyledConfirmation>Book</StyledConfirmation>
       </Wrapper>
       <Wrapper>
-        <Paragraph>You won't be charged yet</Paragraph>
+        <Paragraph>You won&#39;t be charged yet</Paragraph>
       </Wrapper>
     </CenteredWrapper>
   );

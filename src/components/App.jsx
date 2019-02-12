@@ -10,7 +10,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <Reservation offeringId="1" />
+        <Reservation offeringId={4} />
       </div>
     );
   }
