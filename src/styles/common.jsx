@@ -1,6 +1,8 @@
 import styled from 'styled-components';
-import path from 'path';
 
+/*------------------------------------------*/
+/*              Global Vars                 */
+/*------------------------------------------*/
 export const colors = {
   rausch: '#FF5A5F',
   babu: '#00A699',
@@ -10,6 +12,9 @@ export const colors = {
   white: '#FFFFFF',
 };
 
+/*------------------------------------------*/
+/*              Text Classes                */
+/*------------------------------------------*/
 export const Text = styled.p`
   color: ${colors.hof};
   font-family: 'Circular-Book';
@@ -47,11 +52,38 @@ export const Title4 = styled(Text)`
   margin-bottom: 7px;
 `;
 
+export const CleanTitle4 = styled(Title4)`
+  margin: 0px;
+  font-size: 16px;
+`;
+
 export const Title4Light = styled(Text)`
   font-size: 14px;
   font-family: 'Circular-Book';
 `;
 
+export const CleanTitle4Light = styled(Title4Light)`
+  margin: 5px 0 0 0;
+  font-size: 13px;
+  font-family: 'Gotham-Light';
+  font-weight: bold;
+`;
+
+export const Paragraph = styled(Text)`
+  font-size: 12px;
+  display: inline;
+`;
+
+export const Stars = styled(Text)`
+  color: ${colors.babu};
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 10px;
+`;
+
+/*------------------------------------------*/
+/*                  Buttons                 */
+/*------------------------------------------*/
 export const StyledConfirmation = styled.button`
   color: ${colors.white};
   font-family: 'Circular-Medium';
@@ -65,11 +97,48 @@ export const StyledConfirmation = styled.button`
   margin-bottom: 15px;
 `;
 
-export const Paragraph = styled(Text)`
-  font-size: 12px;
-  display: inline;
+export const CircleButton = styled.button`
+  border-radius: 50%;
+  border: 1px solid ${colors.babu};
+  text-align: center;
+  font-size: 16px;
+  font-family: 'Circular-Book';
+  color: ${colors.babu};
+  height: 30px;
+  width: 30px;
+  margin: 0 15px 0 15px;
+  :focus {
+    outline: none;
+    box-shadow: 0 0 5px ${colors.babu};
+  }
 `;
 
+export const LockedCircleButton = styled(CircleButton)`
+  opacity: 0.5;
+  disabled: true;
+  :focus {
+    box-shadow: none;
+  }
+`;
+
+export const LinkButton = styled.button`
+  border: none;
+  text-align: right;
+  font-size: 16px;
+  font-family: 'Circular-Book';
+  color: ${colors.babu};
+  margin: 5px 15px 15px 15px;
+  :hover {
+    text-decoration: underline;
+  }
+  :focus {
+    outline: none;
+  }
+`;
+
+/*------------------------------------------*/
+/*               Containers                 */
+/*------------------------------------------*/
 export const StyledLine = styled.div`
   margin-top: 20px;
   margin-bottom: 20px;
@@ -79,6 +148,7 @@ export const StyledLine = styled.div`
 
 export const Wrapper = styled.div`
   width: 100%;
+  position: relative;
 `;
 
 export const TopWrapper = styled.div`
@@ -123,12 +193,25 @@ export const StyledGuests = styled(StyledTripDetails)`
   justify-content: flex-start;
 `;
 
-export const StyledGuest = styled.div`
-  width: 50%;
+export const StyledGuestLeft = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 75%;
 `;
 
-export const StyledGuestRight = styled(StyledGuest)`
+export const StyledGuest = styled.div`
+`;
+
+export const StyledInfant = styled.div`
+`;
+
+export const StyledGuestRight = styled.div`
+  width: 25%;  
   text-align: right;
+`;
+
+export const UpsideDownImg = styled.img`
+  transform: rotate(180deg);
 `;
 
 export const StyledHookLeft = styled.div`
@@ -139,9 +222,36 @@ export const StyledHookRight = styled.div`
   width: 25%;
 `;
 
-export const Stars = styled(Text)`
-  color: ${colors.babu};
-  margin-left: 5px;
-  margin-right: 5px;
-  font-size: 10px;
+/*------------------------------------------*/
+/*              Modal Components            */
+/*------------------------------------------*/
+export const Modal = styled.div`
+  z-index: 1;
+  width: 100%;
+  margin-top: -10px;
+  background-color: white;
+  box-shadow: 0 1px 1px 1px ${colors.border};
+  border-top: 2px solid ${colors.babu};
+  border-radius: 3px;
+  position: absolute;
+`;
+
+export const GuestModalRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 15px;
+`;
+
+export const RightAlignDiv = styled.div`
+  width: 100%;
+  text-align: right;
+`;
+
+export const GuestModalInfo = styled(GuestModalRow)`
+  width: 80%;
+`;
+
+export const GuestModalCount = styled(CleanTitle4)`
+  width: 20px;
 `;

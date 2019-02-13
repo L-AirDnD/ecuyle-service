@@ -16,7 +16,12 @@ class Reservation extends React.Component {
     super(props);
     this.state = {
       offering: {},
+      numAdults: 1,
+      numChildren: 0,
+      numInfants: 0,
     };
+
+    this.handleGuestModalClose = this.handleGuestModalClose.bind(this);
   }
 
   componentDidMount() {
@@ -32,16 +37,49 @@ class Reservation extends React.Component {
       });
   }
 
+  handleGuestModalClose(guestDetails) {
+    const { numAdults, numChildren, numInfants } = guestDetails;
+    this.setState({
+      numAdults,
+      numChildren,
+      numInfants,
+    });
+  }
+
   render() {
-    const { offering } = this.state;
+    const {
+      offering: {
+        pricePerDay,
+        averageRating,
+        totalReviewCount,
+        weeklyViewCount,
+        maxGuests,
+        maxInfants,
+      },
+      numAdults,
+      numChildren,
+      numInfants,
+    } = this.state;
+
     return (
       <StyledReservation>
-        <ReservationDetails offering={offering} />
+        <ReservationDetails
+          pricePerDay={pricePerDay}
+          averageRating={averageRating}
+          totalReviewCount={totalReviewCount}
+        />
         <DatePicker />
-        <GuestPicker />
+        <GuestPicker
+          maxGuests={maxGuests}
+          maxInfants={maxInfants}
+          numAdults={numAdults}
+          numChildren={numChildren}
+          numInfants={numInfants}
+          handleGuestModalClose={this.handleGuestModalClose}
+        />
         <ReservationConfirmation />
-        { offering.weeklyViewCount > 500
-          ? <ReservationHook weeklyViewCount={offering.weeklyViewCount} />
+        { weeklyViewCount > 500
+          ? <ReservationHook weeklyViewCount={weeklyViewCount} />
           : ''
         }
       </StyledReservation>

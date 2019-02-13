@@ -29,13 +29,13 @@ const ReservationDetails = (props) => {
     return padWithEmptyStars(stars);
   };
 
-  const { offering: { pricePerDay, averageRating, totalReviewCount } } = props;
+  const { pricePerDay, averageRating, totalReviewCount } = props;
+
   return (
     <div>
       <Wrapper>
         <Title2>
-          $
-          { pricePerDay }
+          { `$${pricePerDay}` }
         </Title2>
         <Paragraph> per night</Paragraph>
       </Wrapper>
@@ -52,8 +52,16 @@ const ReservationDetails = (props) => {
   );
 };
 
+ReservationDetails.defaultProps = {
+  pricePerDay: 0,
+  averageRating: 0,
+  totalReviewCount: 0,
+};
+
 ReservationDetails.propTypes = {
-  offering: PropTypes.object,
+  pricePerDay: PropTypes.number,
+  averageRating: PropTypes.number,
+  totalReviewCount: PropTypes.number,
 };
 
 export default ReservationDetails;
