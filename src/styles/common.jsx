@@ -7,7 +7,7 @@ export const colors = {
   rausch: '#FF5A5F',
   babu: '#00A699',
   hof: '#484848',
-  foggy: '#767676',
+  foggy: '#727272',
   border: '#CED1CC',
   white: '#FFFFFF',
 };
@@ -17,14 +17,14 @@ export const colors = {
 /*------------------------------------------*/
 export const Text = styled.p`
   color: ${colors.hof};
-  font-family: 'Circular-Book';
+  font-family: '-apple-system,BlinkMacSystemFont';
   font-weight: 400;
   margin: 0px;
   letter-spacing: 0.15px;
 `;
 
 export const Title2 = styled(Text)`
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
   display: inline;
   margin-left: 4px;
@@ -32,9 +32,9 @@ export const Title2 = styled(Text)`
 `;
 
 export const Title3 = styled(Text)`
-  font-weight: 700;
+  font-weight: 200;
   font-size: 16px;
-  font-family: 'Gotham-Light';
+  font-family: 'Helvetica';
 `;
 
 export const Title3Light = styled(Title3)`
@@ -47,38 +47,45 @@ export const Title3Dark = styled(Title3)`
 
 export const Title4 = styled(Text)`
   font-size: 14px;
-  font-family: 'Circular-Book';
-  font-weight: bold;
+  font-family: '-apple-system,BlinkMacSystemFont';
+  font-weight: 500;
   margin-bottom: 7px;
+  line-height: 1.2857142857142858em;
 `;
 
 export const CleanTitle4 = styled(Title4)`
   margin: 0px;
   font-size: 16px;
+  font-weight: 500;
+  line-height: 1.375em;
 `;
 
 export const Title4Light = styled(Text)`
   font-size: 14px;
-  font-family: 'Circular-Book';
+  font-family: '-apple-system,BlinkMacSystemFont';
+  font-weight: 300;
 `;
 
 export const CleanTitle4Light = styled(Title4Light)`
   margin: 5px 0 0 0;
-  font-size: 13px;
-  font-family: 'Gotham-Light';
-  font-weight: bold;
+  font-size: 14px;
+  font-family: '-apple-system,BlinkMacSystemFont';
+  font-weight: 300;
+  line-height: 1.2857142857142858em;
 `;
 
 export const Paragraph = styled(Text)`
   font-size: 12px;
+  font-family: '-apple-system,BlinkMacSystemFont';
+  font-weight: 500;
+  line-height: 1.333em;
   display: inline;
 `;
 
-export const Stars = styled(Text)`
+export const Stars = styled(Paragraph)`
   color: ${colors.babu};
   margin-left: 5px;
   margin-right: 5px;
-  font-size: 10px;
 `;
 
 /*------------------------------------------*/
@@ -86,7 +93,8 @@ export const Stars = styled(Text)`
 /*------------------------------------------*/
 export const StyledConfirmation = styled.button`
   color: ${colors.white};
-  font-family: 'Circular-Medium';
+  font-family: '-apple-system,BlinkMacSystemFont';
+  font-weight: 500;
   font-size: 16px;
   background-color: ${colors.rausch};
   border-radius: 5px;
@@ -102,7 +110,7 @@ export const CircleButton = styled.button`
   border: 1px solid ${colors.babu};
   text-align: center;
   font-size: 16px;
-  font-family: 'Circular-Book';
+  font-family: '-apple-system,BlinkMacSystemFont';
   color: ${colors.babu};
   height: 30px;
   width: 30px;
@@ -125,7 +133,7 @@ export const LinkButton = styled.button`
   border: none;
   text-align: right;
   font-size: 16px;
-  font-family: 'Circular-Book';
+  font-family: 'Helvetica';
   color: ${colors.babu};
   margin: 5px 15px 15px 15px;
   :hover {
