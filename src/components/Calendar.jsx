@@ -39,17 +39,6 @@ class Calendar extends React.Component {
     this.generateCalendarWithNewMonthYear(monthYear);
   }
 
-  getRelevantReservations(year, numMonth) {
-    const searchDate = `${year}-${numMonth}`;
-    const { reservations } = this.props;
-    return reservations.reduce((acc, reservation) => {
-      if (reservation.start_date.includes(searchDate)) {
-        acc.push(reservation);
-      }
-      return acc;
-    }, []);
-  }
-
   generateCalendarWithNewMonthYear(monthYear) {
     const year = moment(monthYear).format('YYYY');
     const month = moment(monthYear).format('MMMM');
@@ -76,7 +65,7 @@ class Calendar extends React.Component {
   }
 
   buildCalendarDataFromRawReservations(monthYear, year, numMonth) {
-    const relevantReservations = this.getRelevantReservations(year, numMonth);
+    const { reservations } = this.props;
     const calendar = [
       [this.dayMap[0], this.dayMap[1], this.dayMap[2],
         this.dayMap[3], this.dayMap[4], this.dayMap[5], this.dayMap[6]],
@@ -97,7 +86,7 @@ class Calendar extends React.Component {
           const date = dateIterator(true).getDate();
           tempRow.push([
             date,
-            helpers.checkReservationConflict(relevantReservations, monthYear, date)
+            helpers.checkReservationConflict(reservations, monthYear, date),
           ]);
         } else if (firstDayFound && !lastDayFound) {
           const fullDate = dateIterator(true);
@@ -105,7 +94,7 @@ class Calendar extends React.Component {
             const date = fullDate.getDate();
             tempRow.push([
               date,
-              helpers.checkReservationConflict(relevantReservations, monthYear, date)
+              helpers.checkReservationConflict(reservations, monthYear, date),
             ]);
           } else {
             lastDayFound = true;
