@@ -16,6 +16,9 @@ class Reservation extends React.Component {
     super(props);
     this.state = {
       offering: {},
+      reservations: {},
+      startDate: '',
+      endDate: '',
       numAdults: 1,
       numChildren: 0,
       numInfants: 0,
@@ -27,10 +30,17 @@ class Reservation extends React.Component {
   componentDidMount() {
     const { offeringId } = this.props;
     controller.getOfferingDetailsById(offeringId)
-      .then((response) => {
-        this.setState({
-          offering: response,
-        });
+      .then((offering) => {
+        controller.getReservationsByOfferingId(offeringId)
+          .then((reservations) => {
+            this.setState({
+              offering,
+              reservations,
+            });
+          })
+          .catch((err) => {
+            throw err;
+          });
       })
       .catch((err) => {
         throw err;
@@ -59,6 +69,7 @@ class Reservation extends React.Component {
       numAdults,
       numChildren,
       numInfants,
+      reservations,
     } = this.state;
 
     return (
@@ -68,7 +79,7 @@ class Reservation extends React.Component {
           averageRating={averageRating}
           totalReviewCount={totalReviewCount}
         />
-        <DatePicker />
+        <DatePicker reservations={reservations} />
         <GuestPicker
           maxGuests={maxGuests}
           maxInfants={maxInfants}

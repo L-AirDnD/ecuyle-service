@@ -1,4 +1,8 @@
 import React from 'react';
+import DateModal from './DateModal';
+
+import controller from '../controller';
+
 import {
   Wrapper,
   Title3Light,
@@ -8,25 +12,83 @@ import {
   StyledArrow,
 } from '../styles/common';
 
-const DatePicker = (props) => {
-  return (
-    <Wrapper>
-      <Paragraph>
-        Dates
-      </Paragraph>
-      <StyledDates>
-        <StyledDate>
-          <Title3Light>Check in</Title3Light>
-        </StyledDate>
-        <StyledArrow>
-          <img src="assets/right-arrow.svg" alt="right-arrow" height="20px" width="50px" />
-        </StyledArrow>
-        <StyledDate>
-          <Title3Light>Check out</Title3Light>
-        </StyledDate>
-      </StyledDates>
-    </Wrapper>
-  );
-};
+class DatePicker extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalShowing: false,
+      focus: 'checkIn',
+    };
+
+    this.handleDateClick = this.handleDateClick.bind(this);
+    this.handleDayClick = this.handleDayClick.bind(this);
+  }
+
+  getModalIfAppropriate() {
+    const { modalShowing } = this.state;
+    const { reservations } = this.props;
+
+    if (modalShowing) {
+      return (
+        <DateModal
+          reservations={reservations}
+          handleModalCloseClick={this.handleModalCloseClick}
+          handleDayClick={this.handleDayClick}
+        />
+      );
+    }
+    return '';
+  }
+
+  handleDayClick(date) {
+    console.log(date);
+  }
+
+  showModal(focus) {
+    this.setState({
+      modalShowing: true,
+      focus,
+    });
+  }
+
+  closeModal(focus) {
+    this.setState({
+      modalShowing: false,
+      focus,
+    });
+  }
+
+  handleDateClick(e) {
+    const newFocus = e.target.id;
+    const { modalShowing } = this.state;
+    if (modalShowing) {
+      this.closeModal(newFocus);
+    } else {
+      this.showModal(newFocus);
+    }
+  }
+
+  render() {
+    return (
+      <Wrapper>
+        <Paragraph>
+          Dates
+        </Paragraph>
+        <StyledDates>
+          <StyledDate>
+            <Title3Light id="checkIn" onClick={e => this.handleDateClick(e)}>Check in</Title3Light>
+          </StyledDate>
+          <StyledArrow>
+            <img src="assets/right-arrow.svg" alt="right-arrow" height="20px" width="50px" />
+          </StyledArrow>
+          <StyledDate>
+            <Title3Light id="checkOut" onClick={e => this.handleDateClick(e)}>Check out</Title3Light>
+          </StyledDate>
+        </StyledDates>
+        { this.getModalIfAppropriate() }
+      </Wrapper>
+    );
+  }
+}
 
 export default DatePicker;

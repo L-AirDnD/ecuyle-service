@@ -24,7 +24,7 @@ export const Text = styled.p`
 `;
 
 export const Title2 = styled(Text)`
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
   display: inline;
   margin-left: 4px;
@@ -262,4 +262,60 @@ export const GuestModalInfo = styled(GuestModalRow)`
 
 export const GuestModalCount = styled(CleanTitle4)`
   width: 20px;
+`;
+
+/*------------------------------------------*/
+/*             Calendar Components          */
+/*------------------------------------------*/
+export const StyledCalendar = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+`;
+
+export const StyledCalendarRow = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const StyledCalendarHeader = styled.div`
+  height: 15px;
+  width: 45px;
+  text-align: center;
+  margin-top: 15px;
+`;
+
+export const StyledDay = styled.div`
+  height: 32px;
+  width: 45px;
+  border-right: 1px solid ${colors.border};
+  border-bottom: 1px solid ${colors.border};
+  text-align: center;
+  padding-top: 12px;
+  :hover {
+    background-color: ${colors.border};
+  }
+`;
+
+export const StyledLockedDay = styled(StyledDay)`
+  :hover {
+    background-color: ${colors.white};
+  }
+`;
+
+export const StyledDayText = styled(Text)`
+  font-size: 14px;
+  font-weight: 700;
+`;
+
+export const StyledLockedDayText = styled(StyledDayText)`
+  color: ${colors.border};
+  text-decoration: line-through;
+`;
+
+export const StyledDayHeaderText = styled(Text)`
+  font-size: 11px;
+  font-weight: 500;
+  color: ${colors.foggy};
 `;

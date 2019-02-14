@@ -10,6 +10,16 @@ const controller = {
         reject(err);
       });
   })),
+
+  getReservationsByOfferingId: offeringId => (new Promise((resolve, reject) => {
+    axios.get(`/api/reservations?offering=${offeringId}`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  })),
 };
 
 export default controller;
