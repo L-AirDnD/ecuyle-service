@@ -9,6 +9,7 @@ export const colors = {
   hof: '#484848',
   foggy: '#727272',
   border: '#CED1CC',
+  darkBorder: '#B2B2B2',
   white: '#FFFFFF',
   highlight: '#98EDE5',
 };
@@ -231,6 +232,14 @@ export const StyledHookRight = styled.div`
   width: 25%;
 `;
 
+export const StyledCalendarTitle = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 /*------------------------------------------*/
 /*              Modal Components            */
 /*------------------------------------------*/
@@ -272,7 +281,8 @@ export const StyledCalendar = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
+  margin: 15px;
+  margin-bottom: 0px;
 `;
 
 export const StyledCalendarRow = styled.div`
@@ -330,4 +340,42 @@ export const StyledFocusText = styled(Title3Light)`
 
 export const StyledSelectedDateText = styled(Title3Light)`
   color: ${colors.hof};
+`;
+
+export const StyledMonthIncrement = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  height: 25px;
+  width: 35px;
+  border: 1px solid ${colors.border};
+  margin-right: 10px;
+  :hover {
+    border: 1px solid ${colors.darkBorder};
+  }
+`;
+
+export const StyledLeftCalendarRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 20px;
+`;
+
+export const StyledRightCalendarRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 100%;
+  min-height: 15px;
+`;
+
+export const StyledMonthDecrement = styled(StyledMonthIncrement)`
+  margin-right: 0px;
+  margin-left: 10px;
 `;

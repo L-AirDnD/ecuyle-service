@@ -8,6 +8,12 @@ import CalendarRow from './CalendarRow';
 import {
   StyledCalendar,
   Title2,
+  StyledCalendarTitle,
+  StyledMonthIncrement,
+  StyledMonthDecrement,
+  UpsideDownImg,
+  StyledLeftCalendarRow,
+  Paragraph,
 } from '../styles/common';
 
 class Calendar extends React.Component {
@@ -127,11 +133,23 @@ class Calendar extends React.Component {
 
     return (
       <StyledCalendar>
-        <Title2>
-          <button onClick={this.handleMonthDecrement}>{'<'}</button>
-          {`${month} ${year}`}
-          <button onClick={this.handleMonthIncrement}>{'>'}</button>
-        </Title2>
+        <StyledCalendarTitle>
+          <div>
+            <StyledMonthDecrement onClick={this.handleMonthDecrement}>
+              <UpsideDownImg src="assets/right-arrow.svg" alt="right-arrow" height="15px" width="30px" />
+            </StyledMonthDecrement>
+          </div>
+          <div>
+            <Title2>
+              {`${month} ${year}`}
+            </Title2>
+          </div>
+          <div>
+            <StyledMonthIncrement onClick={this.handleMonthIncrement}>
+              <img src="assets/right-arrow.svg" alt="right-arrow" height="15px" width="30px" />
+            </StyledMonthIncrement>
+          </div>
+        </StyledCalendarTitle>
         <CalendarHeader values={calendar[0]} />
         <CalendarRow values={calendar[1]} handleDayClick={handleDayClick} />
         <CalendarRow values={calendar[2]} handleDayClick={handleDayClick} />
@@ -145,9 +163,11 @@ class Calendar extends React.Component {
           ? <CalendarRow values={calendar[6]} handleDayClick={handleDayClick} />
           : ''
         }
-        <div>
-          Updated 1 month ago
-        </div>
+        <StyledLeftCalendarRow>
+          <Paragraph>
+            Updated today
+          </Paragraph>
+        </StyledLeftCalendarRow>
       </StyledCalendar>
     );
   }

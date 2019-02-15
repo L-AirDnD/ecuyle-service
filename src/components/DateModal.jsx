@@ -5,6 +5,7 @@ import Calendar from './Calendar';
 import {
   Modal,
   LinkButton,
+  StyledRightCalendarRow,
 } from '../styles/common';
 
 const DateModal = (props) => {
@@ -19,12 +20,14 @@ const DateModal = (props) => {
   const showClearDatesIfApplicable = () => {
     if (checkIn !== '' || checkOut !== '') {
       return (
-        <LinkButton onClick={handleClearDates}>
-          Clear Dates
-        </LinkButton>
+        <StyledRightCalendarRow>
+          <LinkButton onClick={handleClearDates}>
+            Clear Dates
+          </LinkButton>
+        </StyledRightCalendarRow>
       );
     }
-    return '';
+    return <StyledRightCalendarRow />;
   };
 
   return (
