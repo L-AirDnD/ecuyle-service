@@ -33,11 +33,17 @@ class DatePicker extends React.Component {
   }
 
   componentDidMount() {
-    const { getCloseDateModalFunc, checkIn, checkOut } = this.props;
+    const {
+      getCloseDateModalFunc,
+      checkIn,
+      checkOut,
+      reservations,
+    } = this.props;
     getCloseDateModalFunc(this.closeModal);
     this.setState({
       checkIn,
       checkOut,
+      currReservations: reservations,
     });
   }
 
@@ -115,19 +121,18 @@ class DatePicker extends React.Component {
 
   setCheckInDate(date) {
     const { checkOut } = this.state;
-    if (checkOut === '') {
+    if (checkOut !== '' && this.checkReservationDatesValidity(date, checkOut)) {
+      this.setState({ checkIn: date }, () => {
+        this.closeModal();
+        this.sendDateDetailsToParentIfComplete();
+      });
+    } else {
       const currReservations = this.buildAvailableDatesAfterCheckIn(date);
       this.setState({
         checkIn: date,
         focus: 'checkOut',
         currReservations,
-      }, () => {
-        this.sendDateDetailsToParentIfComplete();
-      });
-    } else {
-      this.setState({ checkIn: date }, () => {
-        this.closeModal();
-        this.sendDateDetailsToParentIfComplete();
+        checkOut: '',
       });
     }
   }
@@ -147,6 +152,19 @@ class DatePicker extends React.Component {
         this.sendDateDetailsToParentIfComplete();
       });
     }
+  }
+
+  checkReservationDatesValidity(checkIn, checkOut) {
+    const { reservations } = this.props;
+    const checkInDate = moment(checkIn);
+    const checkOutDate = moment(checkOut);
+    if (checkInDate > checkOutDate) return false;
+    for (let i = 0; i < reservations.length; i += 1) {
+      const reservationStart = moment(reservations[i].start_date);
+      const reservationEnd = moment(reservations[i].end_date);
+      if (checkInDate < reservationStart && checkOutDate > reservationEnd) return false;
+    }
+    return true;
   }
 
   buildAvailableDatesAfterCheckIn(checkIn) {
@@ -189,9 +207,13 @@ class DatePicker extends React.Component {
   }
 
   handleClearDates() {
+    const { reservations } = this.props;
     this.setState({
       checkIn: '',
       checkOut: '',
+      currReservations: reservations,
+    }, () => {
+      this.closeModal();
     });
   }
 

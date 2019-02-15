@@ -16,7 +16,7 @@ class Reservation extends React.Component {
     super(props);
     this.state = {
       offering: {},
-      reservations: {},
+      reservations: [],
       checkIn: '',
       checkOut: '',
       numAdults: 1,
