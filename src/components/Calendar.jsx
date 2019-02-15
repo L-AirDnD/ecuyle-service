@@ -123,6 +123,8 @@ class Calendar extends React.Component {
       numMonth,
     } = this.state;
 
+    const { handleDayClick } = this.props;
+
     return (
       <StyledCalendar>
         <Title2>
@@ -131,16 +133,16 @@ class Calendar extends React.Component {
           <button onClick={this.handleMonthIncrement}>{'>'}</button>
         </Title2>
         <CalendarHeader values={calendar[0]} />
-        <CalendarRow values={calendar[1]} />
-        <CalendarRow values={calendar[2]} />
-        <CalendarRow values={calendar[3]} />
-        <CalendarRow values={calendar[4]} />
+        <CalendarRow values={calendar[1]} handleDayClick={handleDayClick} />
+        <CalendarRow values={calendar[2]} handleDayClick={handleDayClick} />
+        <CalendarRow values={calendar[3]} handleDayClick={handleDayClick} />
+        <CalendarRow values={calendar[4]} handleDayClick={handleDayClick} />
         { calendar.length >= 6
-          ? <CalendarRow values={calendar[5]} />
+          ? <CalendarRow values={calendar[5]} handleDayClick={handleDayClick} />
           : ''
         }
         { calendar.length >= 7
-          ? <CalendarRow values={calendar[6]} />
+          ? <CalendarRow values={calendar[6]} handleDayClick={handleDayClick} />
           : ''
         }
         <div>

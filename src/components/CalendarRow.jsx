@@ -10,7 +10,7 @@ import {
 } from '../styles/common';
 
 const CalendarRow = (props) => {
-  const { values } = props;
+  const { values, handleDayClick } = props;
   const getCalendarDays = () => (
     values.map((value) => {
       if (value[1] === true) {
@@ -21,7 +21,7 @@ const CalendarRow = (props) => {
         );
       }
       return (
-        <StyledDay id={value[2]} key={value[2]}>
+        <StyledDay onClick={() => handleDayClick(value[2])} id={value[2]} key={value[2]}>
           <StyledDayText>{value[0]}</StyledDayText>
         </StyledDay>
       );

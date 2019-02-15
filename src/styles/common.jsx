@@ -10,6 +10,7 @@ export const colors = {
   foggy: '#727272',
   border: '#CED1CC',
   white: '#FFFFFF',
+  highlight: '#98EDE5',
 };
 
 /*------------------------------------------*/
@@ -318,4 +319,11 @@ export const StyledDayHeaderText = styled(Text)`
   font-size: 11px;
   font-weight: 500;
   color: ${colors.foggy};
+`;
+
+export const StyledFocusText = styled(Title3Light)`
+  color: ${colors.babu};
+  background-color: ${colors.highlight};
+  border-radius: 2px;
+  border: 1px solid ${colors.highlight};
 `;

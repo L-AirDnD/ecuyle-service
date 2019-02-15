@@ -17,8 +17,8 @@ class Reservation extends React.Component {
     this.state = {
       offering: {},
       reservations: {},
-      startDate: '',
-      endDate: '',
+      checkIn: '',
+      checkOut: '',
       numAdults: 1,
       numChildren: 0,
       numInfants: 0,
@@ -73,6 +73,14 @@ class Reservation extends React.Component {
     });
   }
 
+  handleDateModalClose(dateDetails) {
+    const { checkIn, checkOut } = dateDetails;
+    this.setState({
+      checkIn,
+      checkOut,
+    });
+  }
+
   handleStrayClick(e) {
     const { target } = e;
     const { id } = target;
@@ -99,6 +107,8 @@ class Reservation extends React.Component {
       numChildren,
       numInfants,
       reservations,
+      checkIn,
+      checkOut,
     } = this.state;
 
     return (
@@ -109,6 +119,8 @@ class Reservation extends React.Component {
           totalReviewCount={totalReviewCount}
         />
         <DatePicker
+          checkIn={checkIn}
+          checkOut={checkOut}
           reservations={reservations}
           getCloseDateModalFunc={this.getCloseDateModalFunc}
         />
