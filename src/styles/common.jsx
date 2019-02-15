@@ -327,3 +327,7 @@ export const StyledFocusText = styled(Title3Light)`
   border-radius: 2px;
   border: 1px solid ${colors.highlight};
 `;
+
+export const StyledSelectedDateText = styled(Title3Light)`
+  color: ${colors.hof};
+`;

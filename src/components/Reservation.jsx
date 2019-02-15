@@ -27,6 +27,7 @@ class Reservation extends React.Component {
     };
 
     this.handleGuestModalClose = this.handleGuestModalClose.bind(this);
+    this.handleDateModalFinish = this.handleDateModalFinish.bind(this);
     this.handleStrayClick = this.handleStrayClick.bind(this);
     this.getCloseDateModalFunc = this.getCloseDateModalFunc.bind(this);
     this.getCloseGuestModalFunc = this.getCloseGuestModalFunc.bind(this);
@@ -73,7 +74,7 @@ class Reservation extends React.Component {
     });
   }
 
-  handleDateModalClose(dateDetails) {
+  handleDateModalFinish(dateDetails) {
     const { checkIn, checkOut } = dateDetails;
     this.setState({
       checkIn,
@@ -123,6 +124,7 @@ class Reservation extends React.Component {
           checkOut={checkOut}
           reservations={reservations}
           getCloseDateModalFunc={this.getCloseDateModalFunc}
+          handleDateModalFinish={this.handleDateModalFinish}
         />
         <GuestPicker
           maxGuests={maxGuests}

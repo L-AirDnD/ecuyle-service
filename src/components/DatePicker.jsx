@@ -12,6 +12,7 @@ import {
   StyledDate,
   StyledArrow,
   StyledFocusText,
+  StyledSelectedDateText,
 } from '../styles/common';
 
 class DatePicker extends React.Component {
@@ -27,6 +28,7 @@ class DatePicker extends React.Component {
     this.handleDateClick = this.handleDateClick.bind(this);
     this.handleDayClick = this.handleDayClick.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.handleClearDates = this.handleClearDates.bind(this);
   }
 
   componentDidMount() {
@@ -39,15 +41,18 @@ class DatePicker extends React.Component {
   }
 
   getModalIfAppropriate() {
-    const { modalShowing } = this.state;
+    const { modalShowing, checkIn, checkOut } = this.state;
     const { reservations } = this.props;
 
     if (modalShowing) {
       return (
         <DateModal
           reservations={reservations}
+          checkIn={checkIn}
+          checkOut={checkOut}
           handleModalCloseClick={this.handleModalCloseClick}
           handleDayClick={this.handleDayClick}
+          handleClearDates={this.handleClearDates}
         />
       );
     }
@@ -63,7 +68,7 @@ class DatePicker extends React.Component {
     }
     return checkIn === ''
       ? <Title3Light id="checkIn" onClick={e => this.handleDateClick(e)}>Check in</Title3Light>
-      : <Title3Light id="checkIn" onClick={e => this.handleDateClick(e)}>{moment(checkIn).format('MM/DD/YYYY')}</Title3Light>;
+      : <StyledSelectedDateText id="checkIn" onClick={e => this.handleDateClick(e)}>{moment(checkIn).format('MM/DD/YYYY')}</StyledSelectedDateText>;
   }
 
   getCheckOutComponent() {
@@ -75,15 +80,44 @@ class DatePicker extends React.Component {
     }
     return checkOut === ''
       ? <Title3Light id="checkOut" onClick={e => this.handleDateClick(e)}>Check out</Title3Light>
-      : <Title3Light id="checkOut" onClick={e => this.handleDateClick(e)}>{moment(checkOut).format('MM/DD/YYYY')}</Title3Light>;
+      : <StyledSelectedDateText id="checkOut" onClick={e => this.handleDateClick(e)}>{moment(checkOut).format('MM/DD/YYYY')}</StyledSelectedDateText>;
   }
 
   handleDayClick(date) {
-    const { focus } = this.state;
+    const { focus, checkIn, checkOut } = this.state;
     if (focus === 'checkOut') {
-      this.setState({ checkOut: date });
-    } else {
-      this.setState({ checkIn: date });
+      if (checkIn === '') {
+        this.setState({
+          checkOut: date,
+          focus: 'checkIn',
+        });
+      } else {
+        this.setState({ checkOut: date });
+        this.closeModal();
+      }
+    } else if (focus === 'checkIn') {
+      if (checkOut === '') {
+        this.setState({
+          checkIn: date,
+          focus: 'checkOut',
+        });
+      } else {
+        this.setState({ checkIn: date });
+        this.closeModal();
+      }
+    }
+
+    this.sendDateDetailsToParentIfComplete();
+  }
+
+  sendDateDetailsToParentIfComplete() {
+    const { checkIn, checkOut } = this.state;
+    if (checkIn !== '' && checkOut !== '') {
+      const { handleDateModalFinish } = this.props;
+      handleDateModalFinish({
+        checkIn,
+        checkOut,
+      });
     }
   }
 
@@ -92,8 +126,14 @@ class DatePicker extends React.Component {
     this.showModal(id);
   }
 
+  handleClearDates() {
+    this.setState({
+      checkIn: '',
+      checkOut: '',
+    });
+  }
+
   showModal(focus) {
-    console.log(`New focus: ${focus}`);
     this.setState({
       modalShowing: true,
       focus,
@@ -101,7 +141,6 @@ class DatePicker extends React.Component {
   }
 
   closeModal(focus) {
-    console.log(`New focus: ${focus}`);
     this.setState({
       modalShowing: false,
       focus,
