@@ -11,6 +11,7 @@ import {
 
 const CalendarRow = (props) => {
   const { values, handleDayClick } = props;
+
   const getCalendarDays = () => (
     values.map((value) => {
       if (value[1] === true) {

@@ -29,6 +29,7 @@ class Calendar extends React.Component {
       6: 'Sa',
     };
     this.state = {
+      reservations: [],
       calendar: [],
       year: '',
       month: '',
@@ -38,6 +39,7 @@ class Calendar extends React.Component {
 
     this.handleMonthIncrement = this.handleMonthIncrement.bind(this);
     this.handleMonthDecrement = this.handleMonthDecrement.bind(this);
+    this.interceptDayClick = this.interceptDayClick.bind(this);
   }
 
   componentWillMount() {
@@ -45,16 +47,52 @@ class Calendar extends React.Component {
     this.generateCalendarWithNewMonthYear(monthYear);
   }
 
+  getClosestReservationToCheckIn(checkIn) {
+    const MAX_DATE = moment(8640000000000000);
+    const { reservations } = this.state;
+    if (reservations.length === 1) return MAX_DATE;
+    for (let i = 0; i < reservations.length - 1; i += 1) {
+      const reservationStartDate = moment(reservations[i].start_date);
+      const reservationEndDate = moment(reservations[i].end_date);
+      const nextReservationStartDate = moment(reservations[i + 1].start_date);
+      const checkInDate = moment(checkIn);
+      if (checkInDate < reservationStartDate) {
+        return reservationStartDate;
+      }
+      if (checkInDate < nextReservationStartDate && checkInDate > reservationEndDate) {
+        return nextReservationStartDate;
+      }
+    }
+    return MAX_DATE;
+  }
+
+  buildAvailableDatesAfterCheckIn(checkIn) {
+    const MAX_DATE = moment(8640000000000000);
+    const latestCheckOut = this.getClosestReservationToCheckIn(checkIn);
+    const availBeforeCheckIn = {
+      start_date: moment().format(),
+      end_date: moment(checkIn).subtract(1, 'days').format(),
+    };
+    const availAfterLatestCheckOut = {
+      start_date: latestCheckOut.format(),
+      end_date: MAX_DATE.format(),
+    };
+    return [availBeforeCheckIn, availAfterLatestCheckOut];
+  }
+
   generateCalendarWithNewMonthYear(monthYear) {
+    const { reservations } = this.props;
     const year = moment(monthYear).format('YYYY');
     const month = moment(monthYear).format('MMMM');
     const numMonth = moment(monthYear).format('MM');
+    const calendar = this.buildCalendarDataFromRawReservations(monthYear, year, numMonth);
     this.setState({
-      calendar: this.buildCalendarDataFromRawReservations(monthYear, year, numMonth),
+      calendar,
       year,
       month,
       numMonth,
       monthYear,
+      reservations,
     });
   }
 
@@ -121,6 +159,19 @@ class Calendar extends React.Component {
     return calendar;
   }
 
+  interceptDayClick(date) {
+    const { focus, handleDayClick } = this.props;
+    const { monthYear } = this.state;
+    if (focus === 'checkIn') {
+      const reservations = this.buildAvailableDatesAfterCheckIn(date);
+      this.setState({ reservations }, () => {
+        this.generateCalendarWithNewMonthYear(monthYear);
+      });
+    }
+    handleDayClick(date);
+  }
+
+
   render() {
     const {
       calendar,
@@ -128,8 +179,6 @@ class Calendar extends React.Component {
       month,
       numMonth,
     } = this.state;
-
-    const { handleDayClick } = this.props;
 
     return (
       <StyledCalendar>
@@ -151,16 +200,16 @@ class Calendar extends React.Component {
           </div>
         </StyledCalendarTitle>
         <CalendarHeader values={calendar[0]} />
-        <CalendarRow values={calendar[1]} handleDayClick={handleDayClick} />
-        <CalendarRow values={calendar[2]} handleDayClick={handleDayClick} />
-        <CalendarRow values={calendar[3]} handleDayClick={handleDayClick} />
-        <CalendarRow values={calendar[4]} handleDayClick={handleDayClick} />
+        <CalendarRow values={calendar[1]} handleDayClick={this.interceptDayClick} />
+        <CalendarRow values={calendar[2]} handleDayClick={this.interceptDayClick} />
+        <CalendarRow values={calendar[3]} handleDayClick={this.interceptDayClick} />
+        <CalendarRow values={calendar[4]} handleDayClick={this.interceptDayClick} />
         { calendar.length >= 6
-          ? <CalendarRow values={calendar[5]} handleDayClick={handleDayClick} />
+          ? <CalendarRow values={calendar[5]} handleDayClick={this.interceptDayClick} />
           : ''
         }
         { calendar.length >= 7
-          ? <CalendarRow values={calendar[6]} handleDayClick={handleDayClick} />
+          ? <CalendarRow values={calendar[6]} handleDayClick={this.interceptDayClick} />
           : ''
         }
         <StyledLeftCalendarRow>

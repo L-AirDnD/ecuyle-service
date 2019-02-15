@@ -1,6 +1,6 @@
 import React from 'react';
+import moment, { max } from 'moment';
 import DateModal from './DateModal';
-import moment from 'moment';
 
 import controller from '../controller';
 
@@ -23,6 +23,7 @@ class DatePicker extends React.Component {
       focus: '',
       checkIn: '',
       checkOut: '',
+      currReservations: [],
     };
 
     this.handleDateClick = this.handleDateClick.bind(this);
@@ -41,12 +42,22 @@ class DatePicker extends React.Component {
   }
 
   getModalIfAppropriate() {
-    const { modalShowing, checkIn, checkOut } = this.state;
-    const { reservations } = this.props;
+    const {
+      modalShowing,
+      checkIn,
+      checkOut,
+      focus,
+    } = this.state;
+    let { reservations } = this.props;
+    if (checkIn !== '') {
+      const { currReservations } = this.state;
+      reservations = currReservations;
+    }
 
     if (modalShowing) {
       return (
         <DateModal
+          focus={focus}
           reservations={reservations}
           checkIn={checkIn}
           checkOut={checkOut}
@@ -83,36 +94,81 @@ class DatePicker extends React.Component {
       : <StyledSelectedDateText id="checkOut" onClick={e => this.handleDateClick(e)}>{moment(checkOut).format('MM/DD/YYYY')}</StyledSelectedDateText>;
   }
 
+  getClosestReservationToCheckIn(checkIn) {
+    const MAX_DATE = moment(8640000000000000);
+    const { reservations } = this.props;
+    if (reservations.length === 1) return MAX_DATE;
+    for (let i = 0; i < reservations.length - 1; i += 1) {
+      const reservationStartDate = moment(reservations[i].start_date);
+      const reservationEndDate = moment(reservations[i].end_date);
+      const nextReservationStartDate = moment(reservations[i + 1].start_date);
+      const checkInDate = moment(checkIn);
+      if (checkInDate < reservationStartDate) {
+        return reservationStartDate;
+      }
+      if (checkInDate < nextReservationStartDate && checkInDate > reservationEndDate) {
+        return nextReservationStartDate;
+      }
+    }
+    return MAX_DATE;
+  }
+
+  setCheckInDate(date) {
+    const { checkOut } = this.state;
+    if (checkOut === '') {
+      const currReservations = this.buildAvailableDatesAfterCheckIn(date);
+      this.setState({
+        checkIn: date,
+        focus: 'checkOut',
+        currReservations,
+      }, () => {
+        this.sendDateDetailsToParentIfComplete();
+      });
+    } else {
+      this.setState({ checkIn: date }, () => {
+        this.closeModal();
+        this.sendDateDetailsToParentIfComplete();
+      });
+    }
+  }
+
+  setCheckOutDate(date) {
+    const { checkIn } = this.state;
+    if (checkIn === '') {
+      this.setState({
+        checkOut: date,
+        focus: 'checkIn',
+      }, () => {
+        this.sendDateDetailsToParentIfComplete();
+      });
+    } else {
+      this.setState({ checkOut: date }, () => {
+        this.closeModal();
+        this.sendDateDetailsToParentIfComplete();
+      });
+    }
+  }
+
+  buildAvailableDatesAfterCheckIn(checkIn) {
+    const MAX_DATE = moment(8640000000000000);
+    const latestCheckOut = this.getClosestReservationToCheckIn(checkIn);
+    const availBeforeCheckIn = {
+      start_date: moment().format(),
+      end_date: moment(checkIn).subtract(1, 'days').format(),
+    };
+    const availAfterLatestCheckOut = {
+      start_date: latestCheckOut.format(),
+      end_date: MAX_DATE.format(),
+    };
+    return [availBeforeCheckIn, availAfterLatestCheckOut];
+  }
+
   handleDayClick(date) {
-    const { focus, checkIn, checkOut } = this.state;
-    if (focus === 'checkOut') {
-      if (checkIn === '') {
-        this.setState({
-          checkOut: date,
-          focus: 'checkIn',
-        }, () => {
-          this.sendDateDetailsToParentIfComplete();
-        });
-      } else {
-        this.setState({ checkOut: date }, () => {
-          this.closeModal();
-          this.sendDateDetailsToParentIfComplete();
-        });
-      }
-    } else if (focus === 'checkIn') {
-      if (checkOut === '') {
-        this.setState({
-          checkIn: date,
-          focus: 'checkOut',
-        }, () => {
-          this.sendDateDetailsToParentIfComplete();
-        });
-      } else {
-        this.setState({ checkIn: date }, () => {
-          this.closeModal();
-          this.sendDateDetailsToParentIfComplete();
-        });
-      }
+    const { focus } = this.state;
+    if (focus === 'checkIn') {
+      this.setCheckInDate(date);
+    } else if (focus === 'checkOut') {
+      this.setCheckOutDate(date);
     }
   }
 
