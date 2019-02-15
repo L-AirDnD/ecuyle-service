@@ -28,6 +28,7 @@ class Reservation extends React.Component {
       closeDateModalFunc: () => {},
       closeGuestModalFunc: () => {},
       clearDatesFunc: () => {},
+      clearGuestsFunc: () => {},
     };
 
     this.handleGuestModalClose = this.handleGuestModalClose.bind(this);
@@ -38,6 +39,7 @@ class Reservation extends React.Component {
     this.getCloseGuestModalFunc = this.getCloseGuestModalFunc.bind(this);
     this.handleBookingClick = this.handleBookingClick.bind(this);
     this.getClearDatesFunc = this.getClearDatesFunc.bind(this);
+    this.getClearGuestsFunc = this.getClearGuestsFunc.bind(this);
   }
 
   componentDidMount() {
@@ -93,6 +95,12 @@ class Reservation extends React.Component {
     });
   }
 
+  getClearGuestsFunc(clearGuestsFunc) {
+    this.setState({
+      clearGuestsFunc,
+    });
+  }
+
   handleGuestModalClose(guestDetails) {
     const { numAdults, numChildren, numInfants } = guestDetails;
     this.setState({
@@ -131,6 +139,7 @@ class Reservation extends React.Component {
       numInfants,
       openDateModalFunc,
       clearDatesFunc,
+      clearGuestsFunc,
     } = this.state;
 
     if (checkIn === '') {
@@ -141,6 +150,7 @@ class Reservation extends React.Component {
       controller.postReservationByOfferingId(this.buildReservation())
         .then(() => {
           clearDatesFunc();
+          clearGuestsFunc();
           this.getOfferingDetails();
         })
         .catch((err) => {
@@ -217,6 +227,7 @@ class Reservation extends React.Component {
           numInfants={numInfants}
           handleGuestModalClose={this.handleGuestModalClose}
           getCloseGuestModalFunc={this.getCloseGuestModalFunc}
+          getClearGuestsFunc={this.getClearGuestsFunc}
         />
         <ReservationConfirmation handleBookingClick={this.handleBookingClick} />
         { weeklyViewCount > 500

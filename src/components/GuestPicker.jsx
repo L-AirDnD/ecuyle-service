@@ -30,11 +30,13 @@ class GuestPicker extends React.Component {
     this.handleIncrement = this.handleIncrement.bind(this);
     this.handleDecrement = this.handleDecrement.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.clearGuestCount = this.clearGuestCount.bind(this);
   }
 
   componentDidMount() {
-    const { getCloseGuestModalFunc } = this.props;
+    const { getCloseGuestModalFunc, getClearGuestsFunc } = this.props;
     getCloseGuestModalFunc(this.closeModal);
+    getClearGuestsFunc(this.clearGuestCount);
   }
 
   getExpandArrowDirection() {
@@ -88,6 +90,14 @@ class GuestPicker extends React.Component {
       );
     }
     return guestCount;
+  }
+
+  clearGuestCount() {
+    this.setState({
+      numAdults: 1,
+      numChildren: 0,
+      numInfants: 0,
+    });
   }
 
   handleGuestPickerClick() {
