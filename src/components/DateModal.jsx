@@ -37,6 +37,8 @@ const DateModal = (props) => {
         focus={focus}
         reservations={reservations}
         handleDayClick={handleDayClick}
+        checkIn={checkIn}
+        checkOut={checkOut}
       />
       { showClearDatesIfApplicable() }
     </Modal>

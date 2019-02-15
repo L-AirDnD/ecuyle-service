@@ -19,7 +19,7 @@ module.exports = {
       startDate,
       endDate,
       numAdults,
-      numChilren,
+      numChildren,
       numInfants,
       totalPrice,
     } = reservation;
@@ -47,7 +47,7 @@ module.exports = {
       startDate,
       endDate,
       numAdults,
-      numChilren,
+      numChildren,
       numInfants,
       totalPrice,
       createdAt,

@@ -35,6 +35,7 @@ class Calendar extends React.Component {
       month: '',
       numMonth: '',
       monthYear: '',
+      hasOneDateSelected: false,
     };
 
     this.handleMonthIncrement = this.handleMonthIncrement.bind(this);
@@ -164,9 +165,14 @@ class Calendar extends React.Component {
     const { monthYear } = this.state;
     if (focus === 'checkIn') {
       const reservations = this.buildAvailableDatesAfterCheckIn(date);
-      this.setState({ reservations }, () => {
+      this.setState({
+        reservations,
+        hasOneDateSelected: true,
+      }, () => {
         this.generateCalendarWithNewMonthYear(monthYear);
       });
+    } else {
+      this.setState({ hasOneDateSelected: true });
     }
     handleDayClick(date);
   }
@@ -178,8 +184,10 @@ class Calendar extends React.Component {
       year,
       month,
       numMonth,
+      hasOneDateSelected,
     } = this.state;
 
+    const { checkIn, checkOut } = this.props;
     return (
       <StyledCalendar>
         <StyledCalendarTitle>
@@ -200,16 +208,56 @@ class Calendar extends React.Component {
           </div>
         </StyledCalendarTitle>
         <CalendarHeader values={calendar[0]} />
-        <CalendarRow values={calendar[1]} handleDayClick={this.interceptDayClick} />
-        <CalendarRow values={calendar[2]} handleDayClick={this.interceptDayClick} />
-        <CalendarRow values={calendar[3]} handleDayClick={this.interceptDayClick} />
-        <CalendarRow values={calendar[4]} handleDayClick={this.interceptDayClick} />
+        <CalendarRow
+          checkIn={checkIn}
+          checkOut={checkOut}
+          hasOneDateSelected={hasOneDateSelected}
+          values={calendar[1]}
+          handleDayClick={this.interceptDayClick}
+        />
+        <CalendarRow
+          checkIn={checkIn}
+          checkOut={checkOut}
+          hasOneDateSelected={hasOneDateSelected}
+          values={calendar[2]}
+          handleDayClick={this.interceptDayClick}
+        />
+        <CalendarRow
+          checkIn={checkIn}
+          checkOut={checkOut}
+          hasOneDateSelected={hasOneDateSelected}
+          values={calendar[3]}
+          handleDayClick={this.interceptDayClick}
+        />
+        <CalendarRow
+          checkIn={checkIn}
+          checkOut={checkOut}
+          hasOneDateSelected={hasOneDateSelected}
+          values={calendar[4]}
+          handleDayClick={this.interceptDayClick}
+        />
         { calendar.length >= 6
-          ? <CalendarRow values={calendar[5]} handleDayClick={this.interceptDayClick} />
+          ? (
+            <CalendarRow
+              checkIn={checkIn}
+              checkOut={checkOut}
+              hasOneDateSelected={hasOneDateSelected}
+              values={calendar[5]}
+              handleDayClick={this.interceptDayClick}
+            />
+          )
           : ''
         }
         { calendar.length >= 7
-          ? <CalendarRow values={calendar[6]} handleDayClick={this.interceptDayClick} />
+          ? (
+            <CalendarRow
+              checkIn={checkIn}
+              checkOut={checkOut}
+              hasOneDateSelected={hasOneDateSelected}
+              values={calendar[6]}
+              handleDayClick={this.interceptDayClick}
+            />
+          )
           : ''
         }
         <StyledLeftCalendarRow>

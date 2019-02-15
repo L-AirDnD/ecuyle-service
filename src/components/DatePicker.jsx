@@ -1,8 +1,6 @@
 import React from 'react';
-import moment, { max } from 'moment';
+import moment from 'moment';
 import DateModal from './DateModal';
-
-import controller from '../controller';
 
 import {
   Wrapper,
@@ -28,18 +26,23 @@ class DatePicker extends React.Component {
 
     this.handleDateClick = this.handleDateClick.bind(this);
     this.handleDayClick = this.handleDayClick.bind(this);
+    this.showModal = this.showModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.handleClearDates = this.handleClearDates.bind(this);
   }
 
   componentDidMount() {
     const {
+      getOpenDateModalFunc,
       getCloseDateModalFunc,
+      getClearDatesFunc,
       checkIn,
       checkOut,
       reservations,
     } = this.props;
+    getOpenDateModalFunc(this.showModal);
     getCloseDateModalFunc(this.closeModal);
+    getClearDatesFunc(this.handleClearDates);
     this.setState({
       checkIn,
       checkOut,
@@ -77,7 +80,7 @@ class DatePicker extends React.Component {
   }
 
   getCheckInComponent() {
-    let { checkIn, focus } = this.state;
+    const { focus, checkIn } = this.state;
     if (focus === 'checkIn') {
       return checkIn === ''
         ? <StyledFocusText id="checkIn" onClick={e => this.handleDateClick(e)}>Check in</StyledFocusText>
@@ -89,7 +92,7 @@ class DatePicker extends React.Component {
   }
 
   getCheckOutComponent() {
-    let { checkOut, focus } = this.state;
+    const { focus, checkOut } = this.state;
     if (focus === 'checkOut') {
       return checkOut === ''
         ? <StyledFocusText id="checkOut" onClick={e => this.handleDateClick(e)}>Check out</StyledFocusText>
@@ -133,6 +136,8 @@ class DatePicker extends React.Component {
         focus: 'checkOut',
         currReservations,
         checkOut: '',
+      }, () => {
+        this.sendDateDetailsToParentIfComplete();
       });
     }
   }
@@ -192,13 +197,11 @@ class DatePicker extends React.Component {
 
   sendDateDetailsToParentIfComplete() {
     const { checkIn, checkOut } = this.state;
-    if (checkIn !== '' && checkOut !== '') {
-      const { handleDateModalFinish } = this.props;
-      handleDateModalFinish({
-        checkIn,
-        checkOut,
-      });
-    }
+    const { handleDateModalFinish } = this.props;
+    handleDateModalFinish({
+      checkIn,
+      checkOut,
+    });
   }
 
   handleDateClick(e) {

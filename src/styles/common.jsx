@@ -12,6 +12,7 @@ export const colors = {
   darkBorder: '#B2B2B2',
   white: '#FFFFFF',
   highlight: '#98EDE5',
+  darkBabu: '#007c73',
 };
 
 /*------------------------------------------*/
@@ -309,6 +310,20 @@ export const StyledDay = styled.div`
   }
 `;
 
+export const StyledHighlightedDay = styled(StyledDay)`
+  :hover {
+    background-color: ${colors.highlight};
+    color: ${colors.babu};
+  }
+`;
+
+export const StyledSelectedDay = styled(StyledDay)`
+  background-color: ${colors.darkBabu};
+  :hover {
+    background-color: ${colors.darkBabu};
+  }
+`;
+
 export const StyledLockedDay = styled(StyledDay)`
   :hover {
     background-color: ${colors.white};
@@ -318,6 +333,10 @@ export const StyledLockedDay = styled(StyledDay)`
 export const StyledDayText = styled(Text)`
   font-size: 14px;
   font-weight: 700;
+`;
+
+export const StyledHighlightedText = styled(StyledDayText)`
+  color: ${colors.white};
 `;
 
 export const StyledLockedDayText = styled(StyledDayText)`
