@@ -15,13 +15,13 @@ const CalendarRow = (props) => {
     values.map((value) => {
       if (value[1] === true) {
         return (
-          <StyledLockedDay key={helpers.generateUniqueId()}>
+          <StyledLockedDay id={helpers.generateUniqueId()} key={helpers.generateUniqueId()}>
             <StyledLockedDayText>{value[0]}</StyledLockedDayText>
           </StyledLockedDay>
         );
       }
       return (
-        <StyledDay key={helpers.generateUniqueId()}>
+        <StyledDay id={value[2]} key={value[2]}>
           <StyledDayText>{value[0]}</StyledDayText>
         </StyledDay>
       );

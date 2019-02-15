@@ -29,6 +29,12 @@ class GuestPicker extends React.Component {
     this.handleModalCloseClick = this.handleModalCloseClick.bind(this);
     this.handleIncrement = this.handleIncrement.bind(this);
     this.handleDecrement = this.handleDecrement.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
+
+  componentDidMount() {
+    const { getCloseGuestModalFunc } = this.props;
+    getCloseGuestModalFunc(this.closeModal);
   }
 
   getExpandArrowDirection() {
@@ -152,7 +158,7 @@ class GuestPicker extends React.Component {
 
   render() {
     return (
-      <Wrapper>
+      <Wrapper id="guestPicker">
         <Paragraph>
           Guests
         </Paragraph>

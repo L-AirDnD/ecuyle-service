@@ -22,9 +22,14 @@ class Reservation extends React.Component {
       numAdults: 1,
       numChildren: 0,
       numInfants: 0,
+      closeDateModalFunc: () => {},
+      closeGuestModalFunc: () => {},
     };
 
     this.handleGuestModalClose = this.handleGuestModalClose.bind(this);
+    this.handleStrayClick = this.handleStrayClick.bind(this);
+    this.getCloseDateModalFunc = this.getCloseDateModalFunc.bind(this);
+    this.getCloseGuestModalFunc = this.getCloseGuestModalFunc.bind(this);
   }
 
   componentDidMount() {
@@ -47,6 +52,18 @@ class Reservation extends React.Component {
       });
   }
 
+  getCloseDateModalFunc(closeDateModalFunc) {
+    this.setState({
+      closeDateModalFunc,
+    });
+  }
+
+  getCloseGuestModalFunc(closeGuestModalFunc) {
+    this.setState({
+      closeGuestModalFunc,
+    });
+  }
+
   handleGuestModalClose(guestDetails) {
     const { numAdults, numChildren, numInfants } = guestDetails;
     this.setState({
@@ -54,6 +71,18 @@ class Reservation extends React.Component {
       numChildren,
       numInfants,
     });
+  }
+
+  handleStrayClick(e) {
+    const { target } = e;
+    const { id } = target;
+    const { closeDateModalFunc, closeGuestModalFunc } = this.state;
+    if (id !== 'checkIn' && id !== 'checkOut' && document.querySelector('#dateModal') && !document.querySelector('#dateModal').contains(target)) {
+      closeDateModalFunc();
+    }
+    if (document.querySelector('#guestModal') && !document.querySelector('#guestModal').contains(target)) {
+      closeGuestModalFunc();
+    }
   }
 
   render() {
@@ -73,13 +102,16 @@ class Reservation extends React.Component {
     } = this.state;
 
     return (
-      <StyledReservation>
+      <StyledReservation onClick={this.handleStrayClick}>
         <ReservationDetails
           pricePerDay={pricePerDay}
           averageRating={averageRating}
           totalReviewCount={totalReviewCount}
         />
-        <DatePicker reservations={reservations} />
+        <DatePicker
+          reservations={reservations}
+          getCloseDateModalFunc={this.getCloseDateModalFunc}
+        />
         <GuestPicker
           maxGuests={maxGuests}
           maxInfants={maxInfants}
@@ -87,6 +119,7 @@ class Reservation extends React.Component {
           numChildren={numChildren}
           numInfants={numInfants}
           handleGuestModalClose={this.handleGuestModalClose}
+          getCloseGuestModalFunc={this.getCloseGuestModalFunc}
         />
         <ReservationConfirmation />
         { weeklyViewCount > 500

@@ -18,10 +18,18 @@ class DatePicker extends React.Component {
     this.state = {
       modalShowing: false,
       focus: 'checkIn',
+      checkIn: '',
+      checkOut: '',
     };
 
     this.handleDateClick = this.handleDateClick.bind(this);
     this.handleDayClick = this.handleDayClick.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
+
+  componentDidMount() {
+    const { getCloseDateModalFunc } = this.props;
+    getCloseDateModalFunc(this.closeModal);
   }
 
   getModalIfAppropriate() {
@@ -59,13 +67,8 @@ class DatePicker extends React.Component {
   }
 
   handleDateClick(e) {
-    const newFocus = e.target.id;
-    const { modalShowing } = this.state;
-    if (modalShowing) {
-      this.closeModal(newFocus);
-    } else {
-      this.showModal(newFocus);
-    }
+    const { id } = e.target;
+    this.showModal(id);
   }
 
   render() {

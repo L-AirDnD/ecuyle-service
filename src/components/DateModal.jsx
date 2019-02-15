@@ -9,7 +9,7 @@ import {
 const DateModal = (props) => {
   const { handleDayClick, reservations } = props;
   return (
-    <Modal>
+    <Modal id="dateModal">
       <Calendar
         reservations={reservations}
         handleDayClick={handleDayClick}

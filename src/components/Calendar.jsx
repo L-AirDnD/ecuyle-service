@@ -83,10 +83,12 @@ class Calendar extends React.Component {
       for (let j = 0; j < 7; j += 1) {
         if (!firstDayFound && (i + j) === dateIterator(false).getDay()) {
           firstDayFound = true;
-          const date = dateIterator(true).getDate();
+          const fullDate = dateIterator(true);
+          const date = fullDate.getDate();
           tempRow.push([
             date,
             helpers.checkReservationConflict(reservations, monthYear, date),
+            fullDate,
           ]);
         } else if (firstDayFound && !lastDayFound) {
           const fullDate = dateIterator(true);
@@ -95,14 +97,15 @@ class Calendar extends React.Component {
             tempRow.push([
               date,
               helpers.checkReservationConflict(reservations, monthYear, date),
+              fullDate,
             ]);
           } else {
             lastDayFound = true;
-            tempRow.push(['', true]);
+            tempRow.push(['', true, helpers.generateUniqueId()]);
             emptyCellCount += 1;
           }
         } else {
-          tempRow.push(['', true]);
+          tempRow.push(['', true, helpers.generateUniqueId()]);
           emptyCellCount += 1;
         }
       }
