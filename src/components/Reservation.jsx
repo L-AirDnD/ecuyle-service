@@ -95,6 +95,7 @@ class Reservation extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     const {
       offering: {
         pricePerDay,

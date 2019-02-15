@@ -90,24 +90,30 @@ class DatePicker extends React.Component {
         this.setState({
           checkOut: date,
           focus: 'checkIn',
+        }, () => {
+          this.sendDateDetailsToParentIfComplete();
         });
       } else {
-        this.setState({ checkOut: date });
-        this.closeModal();
+        this.setState({ checkOut: date }, () => {
+          this.closeModal();
+          this.sendDateDetailsToParentIfComplete();
+        });
       }
     } else if (focus === 'checkIn') {
       if (checkOut === '') {
         this.setState({
           checkIn: date,
           focus: 'checkOut',
+        }, () => {
+          this.sendDateDetailsToParentIfComplete();
         });
       } else {
-        this.setState({ checkIn: date });
-        this.closeModal();
+        this.setState({ checkIn: date }, () => {
+          this.closeModal();
+          this.sendDateDetailsToParentIfComplete();
+        });
       }
     }
-
-    this.sendDateDetailsToParentIfComplete();
   }
 
   sendDateDetailsToParentIfComplete() {
