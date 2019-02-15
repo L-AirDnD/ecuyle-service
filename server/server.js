@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const router = require('./router.js');
@@ -6,8 +7,8 @@ const router = require('./router.js');
 const app = express();
 app.use(morgan('dev'));
 app.use(bodyParser.json());
+app.use('/', express.static(path.join(__dirname, '../dist')));
 app.use('/api/reservations', router);
-app.use('/', express.static('../dist'));
 
 const PORT = process.env.PORT || 3003;
 
