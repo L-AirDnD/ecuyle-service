@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App it should render the App component 1`] = `ShallowWrapper {}`;
+
+exports[`Reservations it should render a empty star 1`] = `ReactWrapper {}`;
+
+exports[`Reservations it should render a full star 1`] = `ReactWrapper {}`;
+
+exports[`Reservations it should render a half star 1`] = `ReactWrapper {}`;
+
+exports[`Reservations it should render hook 1`] = `ShallowWrapper {}`;

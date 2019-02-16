@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Reservation from '../components/Reservation';
 
 const controller = {
   getOfferingDetailsById: offeringId => (new Promise((resolve, reject) => {

@@ -87,8 +87,8 @@ CREATE VIEW OfferingSummary AS
 				 AVG(ar.average_rating) AS averageRating,
 				 tr.total_review_count AS totalReviewCount
 	  FROM offerings o
-	 INNER JOIN AverageRatings ar
+	 LEFT JOIN AverageRatings ar
 	    ON (ar.offerings_id=o.id)
-	 INNER JOIN TotalReviews tr
+	 LEFT JOIN TotalReviews tr
 	    ON (tr.offerings_id=o.id)
 	 GROUP BY o.id;

@@ -22,7 +22,7 @@ const DateModal = (props) => {
     if (checkIn !== '' || checkOut !== '') {
       return (
         <StyledRightCalendarRow>
-          <LinkButton onClick={handleClearDates}>
+          <LinkButton id="clearDates" onClick={handleClearDates}>
             Clear Dates
           </LinkButton>
         </StyledRightCalendarRow>

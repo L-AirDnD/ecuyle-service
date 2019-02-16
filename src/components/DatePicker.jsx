@@ -7,7 +7,8 @@ import {
   Title3Light,
   StyledDates,
   Paragraph,
-  StyledDate,
+  StyledCheckIn,
+  StyledCheckOut,
   StyledArrow,
   StyledFocusText,
   StyledSelectedDateText,
@@ -241,15 +242,15 @@ class DatePicker extends React.Component {
           Dates
         </Paragraph>
         <StyledDates>
-          <StyledDate>
+          <StyledCheckIn>
             { this.getCheckInComponent() }
-          </StyledDate>
+          </StyledCheckIn>
           <StyledArrow>
             <img src="assets/right-arrow.svg" alt="right-arrow" height="20px" width="50px" />
           </StyledArrow>
-          <StyledDate>
+          <StyledCheckOut>
             { this.getCheckOutComponent() }
-          </StyledDate>
+          </StyledCheckOut>
         </StyledDates>
         { this.getModalIfAppropriate() }
       </Wrapper>

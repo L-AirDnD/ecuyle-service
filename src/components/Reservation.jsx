@@ -123,6 +123,7 @@ class Reservation extends React.Component {
     const { id } = target;
     const { closeDateModalFunc, closeGuestModalFunc } = this.state;
     if (id !== 'checkIn' && id !== 'checkOut' && document.querySelector('#dateModal') && !document.querySelector('#dateModal').contains(target)) {
+      console.log('called inside');
       closeDateModalFunc();
     }
     if (document.querySelector('#guestModal') && !document.querySelector('#guestModal').contains(target)) {
@@ -204,7 +205,7 @@ class Reservation extends React.Component {
     } = this.state;
 
     return (
-      <StyledReservation onClick={this.handleStrayClick}>
+      <StyledReservation id="reservation" onClick={this.handleStrayClick}>
         <ReservationDetails
           pricePerDay={pricePerDay}
           averageRating={averageRating}
