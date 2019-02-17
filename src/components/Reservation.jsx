@@ -24,10 +24,10 @@ class Reservation extends React.Component {
       numAdults: 1,
       numChildren: 0,
       numInfants: 0,
+      datesSelected: false,
       openDateModalFunc: () => {},
       closeDateModalFunc: () => {},
       closeGuestModalFunc: () => {},
-      clearDatesFunc: () => {},
       clearGuestsFunc: () => {},
     };
 
@@ -38,8 +38,11 @@ class Reservation extends React.Component {
     this.getCloseDateModalFunc = this.getCloseDateModalFunc.bind(this);
     this.getCloseGuestModalFunc = this.getCloseGuestModalFunc.bind(this);
     this.handleBookingClick = this.handleBookingClick.bind(this);
-    this.getClearDatesFunc = this.getClearDatesFunc.bind(this);
     this.getClearGuestsFunc = this.getClearGuestsFunc.bind(this);
+
+    this.clearDatePicker = this.clearDatePicker.bind(this);
+    this.setCheckIn = this.setCheckIn.bind(this);
+    this.setCheckOut = this.setCheckOut.bind(this);
   }
 
   componentDidMount() {
@@ -60,6 +63,7 @@ class Reservation extends React.Component {
               numAdults: 1,
               numChildren: 0,
               numInfants: 0,
+              datesSelected: false,
             });
           })
           .catch((err) => {
@@ -74,12 +78,6 @@ class Reservation extends React.Component {
   getOpenDateModalFunc(openDateModalFunc) {
     this.setState({
       openDateModalFunc,
-    });
-  }
-
-  getClearDatesFunc(clearDatesFunc) {
-    this.setState({
-      clearDatesFunc,
     });
   }
 
@@ -101,6 +99,59 @@ class Reservation extends React.Component {
     });
   }
 
+  setCheckIn(checkIn) {
+    const { checkOut } = this.state;
+    const reservations = this.buildAvailableDatesAfterCheckIn(checkIn);
+    const datesSelected = checkOut !== '';
+    this.setState({
+      checkIn,
+      reservations,
+      datesSelected,
+    });
+  }
+
+  setCheckOut(checkOut) {
+    const { checkIn } = this.state;
+    const datesSelected = checkIn !== '';
+    this.setState({
+      checkOut,
+      datesSelected,
+    });
+  }
+
+  getClosestReservationToCheckIn(checkIn) {
+    const MAX_DATE = moment(8640000000000000);
+    const { reservations } = this.state;
+    if (reservations.length === 1) return MAX_DATE;
+    for (let i = 0; i < reservations.length - 1; i += 1) {
+      const reservationStartDate = moment(reservations[i].start_date);
+      const reservationEndDate = moment(reservations[i].end_date);
+      const nextReservationStartDate = moment(reservations[i + 1].start_date);
+      const checkInDate = moment(checkIn);
+      if (checkInDate < reservationStartDate) {
+        return reservationStartDate;
+      }
+      if (checkInDate < nextReservationStartDate && checkInDate > reservationEndDate) {
+        return nextReservationStartDate;
+      }
+    }
+    return MAX_DATE;
+  }
+
+  buildAvailableDatesAfterCheckIn(checkIn) {
+    const MAX_DATE = moment(8640000000000000);
+    const latestCheckOut = this.getClosestReservationToCheckIn(checkIn);
+    const availBeforeCheckIn = {
+      start_date: moment().format(),
+      end_date: moment(checkIn).subtract(1, 'days').format(),
+    };
+    const availAfterLatestCheckOut = {
+      start_date: latestCheckOut.format(),
+      end_date: MAX_DATE.format(),
+    };
+    return [availBeforeCheckIn, availAfterLatestCheckOut];
+  }
+
   handleGuestModalClose(guestDetails) {
     const { numAdults, numChildren, numInfants } = guestDetails;
     this.setState({
@@ -115,6 +166,7 @@ class Reservation extends React.Component {
     this.setState({
       checkIn,
       checkOut,
+      datesSelected: true,
     });
   }
 
@@ -131,15 +183,15 @@ class Reservation extends React.Component {
     }
   }
 
+  clearDatePicker() {
+    this.getOfferingDetails();
+  }
+
   handleBookingClick() {
     const {
       checkIn,
       checkOut,
-      numAdults,
-      numChildren,
-      numInfants,
       openDateModalFunc,
-      clearDatesFunc,
       clearGuestsFunc,
     } = this.state;
 
@@ -150,7 +202,6 @@ class Reservation extends React.Component {
     } else {
       controller.postReservationByOfferingId(this.buildReservation())
         .then(() => {
-          clearDatesFunc();
           clearGuestsFunc();
           this.getOfferingDetails();
         })
@@ -202,6 +253,7 @@ class Reservation extends React.Component {
       reservations,
       checkIn,
       checkOut,
+      datesSelected,
     } = this.state;
 
     return (
@@ -219,6 +271,9 @@ class Reservation extends React.Component {
           getCloseDateModalFunc={this.getCloseDateModalFunc}
           handleDateModalFinish={this.handleDateModalFinish}
           getClearDatesFunc={this.getClearDatesFunc}
+          clearDatePicker={this.clearDatePicker}
+          setCheckIn={this.setCheckIn}
+          setCheckOut={this.setCheckOut}
         />
         <GuestPicker
           maxGuests={maxGuests}
@@ -230,7 +285,13 @@ class Reservation extends React.Component {
           getCloseGuestModalFunc={this.getCloseGuestModalFunc}
           getClearGuestsFunc={this.getClearGuestsFunc}
         />
-        <ReservationConfirmation handleBookingClick={this.handleBookingClick} />
+        <ReservationConfirmation
+          datesSelected={datesSelected}
+          pricePerDay={pricePerDay}
+          checkIn={checkIn}
+          checkOut={checkOut}
+          handleBookingClick={this.handleBookingClick}
+        />
         { weeklyViewCount > 500
           ? <ReservationHook weeklyViewCount={weeklyViewCount} />
           : ''

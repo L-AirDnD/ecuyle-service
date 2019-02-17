@@ -20,9 +20,6 @@ class DatePicker extends React.Component {
     this.state = {
       modalShowing: false,
       focus: '',
-      checkIn: '',
-      checkOut: '',
-      currReservations: [],
     };
 
     this.handleDateClick = this.handleDateClick.bind(this);
@@ -36,33 +33,21 @@ class DatePicker extends React.Component {
     const {
       getOpenDateModalFunc,
       getCloseDateModalFunc,
-      getClearDatesFunc,
-      checkIn,
-      checkOut,
-      reservations,
     } = this.props;
     getOpenDateModalFunc(this.showModal);
     getCloseDateModalFunc(this.closeModal);
-    getClearDatesFunc(this.handleClearDates);
-    this.setState({
-      checkIn,
-      checkOut,
-      currReservations: reservations,
-    });
   }
 
   getModalIfAppropriate() {
     const {
       modalShowing,
-      checkIn,
-      checkOut,
       focus,
     } = this.state;
+    const {
+      checkIn,
+      checkOut,
+    } = this.props;
     let { reservations } = this.props;
-    if (checkIn !== '') {
-      const { currReservations } = this.state;
-      reservations = currReservations;
-    }
 
     if (modalShowing) {
       return (
@@ -81,7 +66,8 @@ class DatePicker extends React.Component {
   }
 
   getCheckInComponent() {
-    const { focus, checkIn } = this.state;
+    const { focus } = this.state;
+    const { checkIn } = this.props;
     if (focus === 'checkIn') {
       return checkIn === ''
         ? <StyledFocusText id="checkIn" onClick={e => this.handleDateClick(e)}>Check in</StyledFocusText>
@@ -93,7 +79,8 @@ class DatePicker extends React.Component {
   }
 
   getCheckOutComponent() {
-    const { focus, checkOut } = this.state;
+    const { focus } = this.state;
+    const { checkOut } = this.props;
     if (focus === 'checkOut') {
       return checkOut === ''
         ? <StyledFocusText id="checkOut" onClick={e => this.handleDateClick(e)}>Check out</StyledFocusText>
@@ -104,59 +91,27 @@ class DatePicker extends React.Component {
       : <StyledSelectedDateText id="checkOut" onClick={e => this.handleDateClick(e)}>{moment(checkOut).format('MM/DD/YYYY')}</StyledSelectedDateText>;
   }
 
-  getClosestReservationToCheckIn(checkIn) {
-    const MAX_DATE = moment(8640000000000000);
-    const { reservations } = this.props;
-    if (reservations.length === 1) return MAX_DATE;
-    for (let i = 0; i < reservations.length - 1; i += 1) {
-      const reservationStartDate = moment(reservations[i].start_date);
-      const reservationEndDate = moment(reservations[i].end_date);
-      const nextReservationStartDate = moment(reservations[i + 1].start_date);
-      const checkInDate = moment(checkIn);
-      if (checkInDate < reservationStartDate) {
-        return reservationStartDate;
-      }
-      if (checkInDate < nextReservationStartDate && checkInDate > reservationEndDate) {
-        return nextReservationStartDate;
-      }
-    }
-    return MAX_DATE;
-  }
-
   setCheckInDate(date) {
-    const { checkOut } = this.state;
+    const { checkOut, setCheckIn } = this.props;
+    setCheckIn(date);
     if (checkOut !== '' && this.checkReservationDatesValidity(date, checkOut)) {
-      this.setState({ checkIn: date }, () => {
-        this.closeModal();
-        this.sendDateDetailsToParentIfComplete();
-      });
+      this.closeModal();
     } else {
-      const currReservations = this.buildAvailableDatesAfterCheckIn(date);
       this.setState({
-        checkIn: date,
         focus: 'checkOut',
-        currReservations,
-        checkOut: '',
-      }, () => {
-        this.sendDateDetailsToParentIfComplete();
       });
     }
   }
 
   setCheckOutDate(date) {
-    const { checkIn } = this.state;
+    const { checkIn, setCheckOut } = this.props;
+    setCheckOut(date);
     if (checkIn === '') {
       this.setState({
-        checkOut: date,
         focus: 'checkIn',
-      }, () => {
-        this.sendDateDetailsToParentIfComplete();
       });
     } else {
-      this.setState({ checkOut: date }, () => {
-        this.closeModal();
-        this.sendDateDetailsToParentIfComplete();
-      });
+      this.closeModal();
     }
   }
 
@@ -173,20 +128,6 @@ class DatePicker extends React.Component {
     return true;
   }
 
-  buildAvailableDatesAfterCheckIn(checkIn) {
-    const MAX_DATE = moment(8640000000000000);
-    const latestCheckOut = this.getClosestReservationToCheckIn(checkIn);
-    const availBeforeCheckIn = {
-      start_date: moment().format(),
-      end_date: moment(checkIn).subtract(1, 'days').format(),
-    };
-    const availAfterLatestCheckOut = {
-      start_date: latestCheckOut.format(),
-      end_date: MAX_DATE.format(),
-    };
-    return [availBeforeCheckIn, availAfterLatestCheckOut];
-  }
-
   handleDayClick(date) {
     const { focus } = this.state;
     if (focus === 'checkIn') {
@@ -196,29 +137,14 @@ class DatePicker extends React.Component {
     }
   }
 
-  sendDateDetailsToParentIfComplete() {
-    const { checkIn, checkOut } = this.state;
-    const { handleDateModalFinish } = this.props;
-    handleDateModalFinish({
-      checkIn,
-      checkOut,
-    });
-  }
-
   handleDateClick(e) {
     const { id } = e.target;
     this.showModal(id);
   }
 
   handleClearDates() {
-    const { reservations } = this.props;
-    this.setState({
-      checkIn: '',
-      checkOut: '',
-      currReservations: reservations,
-    }, () => {
-      this.closeModal();
-    });
+    const { clearDatePicker } = this.props;
+    clearDatePicker();
   }
 
   showModal(focus) {
