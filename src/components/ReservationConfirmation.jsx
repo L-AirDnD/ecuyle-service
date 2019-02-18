@@ -6,15 +6,18 @@ import {
   Paragraph,
 } from '../styles/common';
 
-const ReservationConfirmation = () => (
-  <CenteredWrapper>
-    <Wrapper>
-      <StyledConfirmation>Book</StyledConfirmation>
-    </Wrapper>
-    <Wrapper>
-      <Paragraph>You won&#39;t be charged yet</Paragraph>
-    </Wrapper>
-  </CenteredWrapper>
-);
+const ReservationConfirmation = (props) => {
+  const { handleBookingClick } = props;
+  return (
+    <CenteredWrapper>
+      <Wrapper>
+        <StyledConfirmation onClick={handleBookingClick}>Book</StyledConfirmation>
+      </Wrapper>
+      <Wrapper>
+        <Paragraph>You won&#39;t be charged yet</Paragraph>
+      </Wrapper>
+    </CenteredWrapper>
+  );
+};
 
 export default ReservationConfirmation;
