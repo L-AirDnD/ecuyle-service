@@ -75,7 +75,7 @@ class GuestPicker extends React.Component {
     const numGuests = numAdults + numChildren;
     const guestCount = [
       <StyledGuest key={0}>
-        <Title3Dark>
+        <Title3Dark id="guestCount">
           {numGuests + (numGuests > 1 ? ' guests' : ' guest')}
         </Title3Dark>
       </StyledGuest>,
@@ -83,7 +83,7 @@ class GuestPicker extends React.Component {
     if (numInfants > 0) {
       guestCount.push(
         <StyledInfant key={1}>
-          <Title3Dark>
+          <Title3Dark id="guestCount">
             {`, ${numInfants} ${numInfants > 1 ? ' infants' : ' infant'}`}
           </Title3Dark>
         </StyledInfant>,

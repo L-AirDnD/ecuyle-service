@@ -11,7 +11,7 @@ const ReservationConfirmation = (props) => {
   return (
     <CenteredWrapper>
       <Wrapper>
-        <StyledConfirmation onClick={handleBookingClick}>Book</StyledConfirmation>
+        <StyledConfirmation id="book" onClick={handleBookingClick}>Book</StyledConfirmation>
       </Wrapper>
       <Wrapper>
         <Paragraph>You won&#39;t be charged yet</Paragraph>

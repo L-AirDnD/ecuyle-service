@@ -195,6 +195,10 @@ export const StyledDate = styled.div`
   text-align: left;
 `;
 
+export const StyledCheckIn = styled(StyledDate)``;
+
+export const StyledCheckOut = styled(StyledDate)``;
+
 export const StyledArrow = styled(StyledDate)`
   width: 20%;
   text-align: center;

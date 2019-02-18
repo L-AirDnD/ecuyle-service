@@ -26,13 +26,13 @@ const GuestModalLine = (props) => {
   const getAppropriateDecrement = (innerText) => {
     if (count === min) {
       return (
-        <LockedCircleButton onClick={() => handleDecrement(type)}>
+        <LockedCircleButton id={`decrement${type}`} onClick={() => handleDecrement(type)}>
           {innerText}
         </LockedCircleButton>
       );
     }
     return (
-      <CircleButton onClick={() => handleDecrement(type)}>
+      <CircleButton id={`decrement${type}`} onClick={() => handleDecrement(type)}>
         {innerText}
       </CircleButton>
     );
@@ -41,13 +41,13 @@ const GuestModalLine = (props) => {
   const getAppropriateIncrement = (innerText) => {
     if (count === max) {
       return (
-        <LockedCircleButton onClick={() => handleIncrement(type)}>
+        <LockedCircleButton id={`increment${type}`} onClick={() => handleIncrement(type)}>
           {innerText}
         </LockedCircleButton>
       );
     }
     return (
-      <CircleButton onClick={() => handleIncrement(type)}>
+      <CircleButton id={`increment${type}`} onClick={() => handleIncrement(type)}>
         {innerText}
       </CircleButton>
     );
@@ -67,7 +67,7 @@ const GuestModalLine = (props) => {
         { getAppropriateDecrement('-') }
       </CenteredWrapper>
       <CenteredWrapper>
-        <GuestModalCount>
+        <GuestModalCount id={`count${type}`}>
           { count }
         </GuestModalCount>
       </CenteredWrapper>
