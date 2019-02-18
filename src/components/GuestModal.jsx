@@ -23,7 +23,7 @@ const GuestModal = (props) => {
   } = props;
 
   return (
-    <Modal>
+    <Modal id="guestModal">
       <GuestModalLine
         type="Adults"
         descr=""

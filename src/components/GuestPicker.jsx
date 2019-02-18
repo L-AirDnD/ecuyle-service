@@ -29,6 +29,14 @@ class GuestPicker extends React.Component {
     this.handleModalCloseClick = this.handleModalCloseClick.bind(this);
     this.handleIncrement = this.handleIncrement.bind(this);
     this.handleDecrement = this.handleDecrement.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.clearGuestCount = this.clearGuestCount.bind(this);
+  }
+
+  componentDidMount() {
+    const { getCloseGuestModalFunc, getClearGuestsFunc } = this.props;
+    getCloseGuestModalFunc(this.closeModal);
+    getClearGuestsFunc(this.clearGuestCount);
   }
 
   getExpandArrowDirection() {
@@ -67,7 +75,7 @@ class GuestPicker extends React.Component {
     const numGuests = numAdults + numChildren;
     const guestCount = [
       <StyledGuest key={0}>
-        <Title3Dark>
+        <Title3Dark id="guestCount">
           {numGuests + (numGuests > 1 ? ' guests' : ' guest')}
         </Title3Dark>
       </StyledGuest>,
@@ -75,13 +83,21 @@ class GuestPicker extends React.Component {
     if (numInfants > 0) {
       guestCount.push(
         <StyledInfant key={1}>
-          <Title3Dark>
+          <Title3Dark id="guestCount">
             {`, ${numInfants} ${numInfants > 1 ? ' infants' : ' infant'}`}
           </Title3Dark>
         </StyledInfant>,
       );
     }
     return guestCount;
+  }
+
+  clearGuestCount() {
+    this.setState({
+      numAdults: 1,
+      numChildren: 0,
+      numInfants: 0,
+    });
   }
 
   handleGuestPickerClick() {
@@ -152,7 +168,7 @@ class GuestPicker extends React.Component {
 
   render() {
     return (
-      <Wrapper>
+      <Wrapper id="guestPicker">
         <Paragraph>
           Guests
         </Paragraph>

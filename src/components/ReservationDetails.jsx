@@ -34,7 +34,7 @@ const ReservationDetails = (props) => {
   return (
     <div>
       <Wrapper>
-        <Title2>
+        <Title2 id="pricePerDay">
           { `$${pricePerDay}` }
         </Title2>
         <Paragraph> per night</Paragraph>

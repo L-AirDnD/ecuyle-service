@@ -9,7 +9,10 @@ export const colors = {
   hof: '#484848',
   foggy: '#727272',
   border: '#CED1CC',
+  darkBorder: '#B2B2B2',
   white: '#FFFFFF',
+  highlight: '#98EDE5',
+  darkBabu: '#007c73',
 };
 
 /*------------------------------------------*/
@@ -24,7 +27,7 @@ export const Text = styled.p`
 `;
 
 export const Title2 = styled(Text)`
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
   display: inline;
   margin-left: 4px;
@@ -192,6 +195,10 @@ export const StyledDate = styled.div`
   text-align: left;
 `;
 
+export const StyledCheckIn = styled(StyledDate)``;
+
+export const StyledCheckOut = styled(StyledDate)``;
+
 export const StyledArrow = styled(StyledDate)`
   width: 20%;
   text-align: center;
@@ -230,6 +237,14 @@ export const StyledHookRight = styled.div`
   width: 25%;
 `;
 
+export const StyledCalendarTitle = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 /*------------------------------------------*/
 /*              Modal Components            */
 /*------------------------------------------*/
@@ -262,4 +277,128 @@ export const GuestModalInfo = styled(GuestModalRow)`
 
 export const GuestModalCount = styled(CleanTitle4)`
   width: 20px;
+`;
+
+/*------------------------------------------*/
+/*             Calendar Components          */
+/*------------------------------------------*/
+export const StyledCalendar = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 15px;
+  margin-bottom: 0px;
+`;
+
+export const StyledCalendarRow = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const StyledCalendarHeader = styled.div`
+  height: 15px;
+  width: 45px;
+  text-align: center;
+  margin-top: 15px;
+`;
+
+export const StyledDay = styled.div`
+  height: 32px;
+  width: 45px;
+  border-right: 1px solid ${colors.border};
+  border-bottom: 1px solid ${colors.border};
+  text-align: center;
+  padding-top: 12px;
+  :hover {
+    background-color: ${colors.border};
+  }
+`;
+
+export const StyledHighlightedDay = styled(StyledDay)`
+  :hover {
+    background-color: ${colors.highlight};
+    color: ${colors.babu};
+  }
+`;
+
+export const StyledSelectedDay = styled(StyledDay)`
+  background-color: ${colors.darkBabu};
+  :hover {
+    background-color: ${colors.darkBabu};
+  }
+`;
+
+export const StyledLockedDay = styled(StyledDay)`
+  :hover {
+    background-color: ${colors.white};
+  }
+`;
+
+export const StyledDayText = styled(Text)`
+  font-size: 14px;
+  font-weight: 700;
+`;
+
+export const StyledHighlightedText = styled(StyledDayText)`
+  color: ${colors.white};
+`;
+
+export const StyledLockedDayText = styled(StyledDayText)`
+  color: ${colors.border};
+  text-decoration: line-through;
+`;
+
+export const StyledDayHeaderText = styled(Text)`
+  font-size: 11px;
+  font-weight: 500;
+  color: ${colors.foggy};
+`;
+
+export const StyledFocusText = styled(Title3Light)`
+  color: ${colors.babu};
+  background-color: ${colors.highlight};
+  border-radius: 2px;
+  border: 1px solid ${colors.highlight};
+`;
+
+export const StyledSelectedDateText = styled(Title3Light)`
+  color: ${colors.hof};
+`;
+
+export const StyledMonthIncrement = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  height: 25px;
+  width: 35px;
+  border: 1px solid ${colors.border};
+  margin-right: 10px;
+  :hover {
+    border: 1px solid ${colors.darkBorder};
+  }
+`;
+
+export const StyledLeftCalendarRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 20px;
+`;
+
+export const StyledRightCalendarRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 100%;
+  min-height: 15px;
+`;
+
+export const StyledMonthDecrement = styled(StyledMonthIncrement)`
+  margin-right: 0px;
+  margin-left: 10px;
 `;

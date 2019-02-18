@@ -9,9 +9,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <Reservation offeringId={4} />
-      </div>
+      <Reservation offeringId={4} guestId={2} />
     );
   }
 }

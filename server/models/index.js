@@ -2,7 +2,7 @@ const db = require('../dbConnection.js');
 
 module.exports = {
   getReservationsForOffering: offeringId => new Promise((resolve, reject) => {
-    const queryString = 'SELECT * FROM reservations WHERE offerings_id=?';
+    const queryString = 'SELECT * FROM reservations WHERE offerings_id=? ORDER BY start_date';
     const queryArgs = [offeringId];
     db.query(queryString, queryArgs, (err, results) => {
       if (err) {
@@ -19,7 +19,7 @@ module.exports = {
       startDate,
       endDate,
       numAdults,
-      numChilren,
+      numChildren,
       numInfants,
       totalPrice,
     } = reservation;
@@ -47,7 +47,7 @@ module.exports = {
       startDate,
       endDate,
       numAdults,
-      numChilren,
+      numChildren,
       numInfants,
       totalPrice,
       createdAt,
