@@ -25,24 +25,24 @@ class Reservation extends React.Component {
       numChildren: 0,
       numInfants: 0,
       datesSelected: false,
-      openDateModalFunc: () => {},
-      closeDateModalFunc: () => {},
+      dateModalShowing: false,
+      dateFocus: '',
       closeGuestModalFunc: () => {},
       clearGuestsFunc: () => {},
     };
 
     this.handleGuestModalClose = this.handleGuestModalClose.bind(this);
-    this.handleDateModalFinish = this.handleDateModalFinish.bind(this);
-    this.handleStrayClick = this.handleStrayClick.bind(this);
-    this.getOpenDateModalFunc = this.getOpenDateModalFunc.bind(this);
-    this.getCloseDateModalFunc = this.getCloseDateModalFunc.bind(this);
     this.getCloseGuestModalFunc = this.getCloseGuestModalFunc.bind(this);
-    this.handleBookingClick = this.handleBookingClick.bind(this);
     this.getClearGuestsFunc = this.getClearGuestsFunc.bind(this);
 
+    this.handleBookingClick = this.handleBookingClick.bind(this);
+    this.handleStrayClick = this.handleStrayClick.bind(this);
     this.clearDatePicker = this.clearDatePicker.bind(this);
     this.setCheckIn = this.setCheckIn.bind(this);
     this.setCheckOut = this.setCheckOut.bind(this);
+    this.showDateModal = this.showDateModal.bind(this);
+    this.closeDateModal = this.closeDateModal.bind(this);
+    this.setDatePickerFocus = this.setDatePickerFocus.bind(this);
   }
 
   componentDidMount() {
@@ -73,18 +73,6 @@ class Reservation extends React.Component {
       .catch((err) => {
         throw err;
       });
-  }
-
-  getOpenDateModalFunc(openDateModalFunc) {
-    this.setState({
-      openDateModalFunc,
-    });
-  }
-
-  getCloseDateModalFunc(closeDateModalFunc) {
-    this.setState({
-      closeDateModalFunc,
-    });
   }
 
   getCloseGuestModalFunc(closeGuestModalFunc) {
@@ -138,6 +126,10 @@ class Reservation extends React.Component {
     return MAX_DATE;
   }
 
+  setDatePickerFocus(dateFocus) {
+    this.setState({ dateFocus });
+  }
+
   buildAvailableDatesAfterCheckIn(checkIn) {
     const MAX_DATE = moment(8640000000000000);
     const latestCheckOut = this.getClosestReservationToCheckIn(checkIn);
@@ -161,22 +153,26 @@ class Reservation extends React.Component {
     });
   }
 
-  handleDateModalFinish(dateDetails) {
-    const { checkIn, checkOut } = dateDetails;
+  showDateModal(dateFocus) {
     this.setState({
-      checkIn,
-      checkOut,
-      datesSelected: true,
+      dateModalShowing: true,
+      dateFocus,
+    });
+  }
+
+  closeDateModal() {
+    this.setState({
+      dateModalShowing: false,
+      dateFocus: '',
     });
   }
 
   handleStrayClick(e) {
     const { target } = e;
     const { id } = target;
-    const { closeDateModalFunc, closeGuestModalFunc } = this.state;
+    const { closeGuestModalFunc } = this.state;
     if (id !== 'checkIn' && id !== 'checkOut' && document.querySelector('#dateModal') && !document.querySelector('#dateModal').contains(target)) {
-      console.log('called inside');
-      closeDateModalFunc();
+      this.closeDateModal();
     }
     if (document.querySelector('#guestModal') && !document.querySelector('#guestModal').contains(target)) {
       closeGuestModalFunc();
@@ -254,6 +250,8 @@ class Reservation extends React.Component {
       checkIn,
       checkOut,
       datesSelected,
+      dateModalShowing,
+      dateFocus,
     } = this.state;
 
     return (
@@ -267,13 +265,14 @@ class Reservation extends React.Component {
           checkIn={checkIn}
           checkOut={checkOut}
           reservations={reservations}
-          getOpenDateModalFunc={this.getOpenDateModalFunc}
-          getCloseDateModalFunc={this.getCloseDateModalFunc}
-          handleDateModalFinish={this.handleDateModalFinish}
-          getClearDatesFunc={this.getClearDatesFunc}
+          dateModalShowing={dateModalShowing}
+          dateFocus={dateFocus}
           clearDatePicker={this.clearDatePicker}
           setCheckIn={this.setCheckIn}
           setCheckOut={this.setCheckOut}
+          showDateModal={this.showDateModal}
+          closeDateModal={this.closeDateModal}
+          setDatePickerFocus={this.setDatePickerFocus}
         />
         <GuestPicker
           maxGuests={maxGuests}
@@ -303,10 +302,12 @@ class Reservation extends React.Component {
 
 Reservation.defaultProps = {
   offeringId: 0,
+  guestId: 0,
 };
 
 Reservation.propTypes = {
   offeringId: PropTypes.number,
+  guestId: PropTypes.number,
 };
 
 export default Reservation;
