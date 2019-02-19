@@ -45,4 +45,22 @@ const DateModal = (props) => {
   );
 };
 
+DateModal.defaultProps = {
+  handleDayClick: () => {},
+  reservations: [],
+  checkIn: '',
+  checkOut: '',
+  handleClearDates: () => {},
+  focus: '',
+};
+
+DateModal.propTypes = {
+  handleDayClick: PropTypes.func,
+  reservations: PropTypes.array,
+  checkIn: PropTypes.string,
+  checkOut: PropTypes.string,
+  handleClearDates: PropTypes.func,
+  focus: PropTypes.string,
+};
+
 export default DateModal;
