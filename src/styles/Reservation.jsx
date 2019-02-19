@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { colors } from './common';
 
 const StyledReservation = styled.div`
-  max-height: 500px;
   width: 350px;
   min-width: 350px;
   border: 1px solid ${colors.border};

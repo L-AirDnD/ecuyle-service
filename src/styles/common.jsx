@@ -69,6 +69,10 @@ export const Title4Light = styled(Text)`
   font-weight: 300;
 `;
 
+export const Title4Bold = styled(Title4Light)`
+  font-weight: 400;
+`;
+
 export const CleanTitle4Light = styled(Title4Light)`
   margin: 5px 0 0 0;
   font-size: 14px;
@@ -153,6 +157,13 @@ export const LinkButton = styled.button`
 export const StyledLine = styled.div`
   margin-top: 20px;
   margin-bottom: 20px;
+  height: 1px;
+  background-color: ${colors.border};
+`;
+
+export const StyledLineShort = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
   height: 1px;
   background-color: ${colors.border};
 `;
@@ -243,6 +254,16 @@ export const StyledCalendarTitle = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+`;
+
+export const StyledSummary = styled.div`
+`;
+
+export const StyledSummaryRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 2px 0 2px 0;
 `;
 
 /*------------------------------------------*/
