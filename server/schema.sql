@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS lairdnd;
-CREATE DATABASE lairdnd;
+DROP DATABASE IF EXISTS lairdnd-reservations;
+CREATE DATABASE lairdnd-reservations;
 
-USE lairdnd;
+USE lairdnd-reservations;
 
 /* -------------------------------------------------------*/
 /*                      Create tables                     */
