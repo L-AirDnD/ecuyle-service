@@ -31,7 +31,7 @@ module.exports = {
   MYSQL_HOST: <your_hostname>,
   MYSQL_USER: <your_username>,
   MYSQL_PASSWORD: <your_password>,
-  MYSQL_DB_NAME: 'lairdnd-reservations',
+  MYSQL_DB_NAME: 'lairdnd_reservations',
 };
 ```
 2. Compiling Webpack<br />

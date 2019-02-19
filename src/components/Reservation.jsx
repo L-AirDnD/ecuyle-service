@@ -36,7 +36,6 @@ class Reservation extends React.Component {
     this.getClearGuestsFunc = this.getClearGuestsFunc.bind(this);
 
     this.handleBookingClick = this.handleBookingClick.bind(this);
-    this.handleStrayClick = this.handleStrayClick.bind(this);
     this.clearDatePicker = this.clearDatePicker.bind(this);
     this.setCheckIn = this.setCheckIn.bind(this);
     this.setCheckOut = this.setCheckOut.bind(this);
@@ -157,6 +156,8 @@ class Reservation extends React.Component {
     this.setState({
       dateModalShowing: true,
       dateFocus,
+    }, () => {
+      document.getElementById('dateModal').focus();
     });
   }
 
@@ -167,18 +168,6 @@ class Reservation extends React.Component {
     });
   }
 
-  handleStrayClick(e) {
-    const { target } = e;
-    const { id } = target;
-    const { closeGuestModalFunc } = this.state;
-    if (id !== 'checkIn' && id !== 'checkOut' && document.querySelector('#dateModal') && !document.querySelector('#dateModal').contains(target)) {
-      this.closeDateModal();
-    }
-    if (document.querySelector('#guestModal') && !document.querySelector('#guestModal').contains(target)) {
-      closeGuestModalFunc();
-    }
-  }
-
   clearDatePicker() {
     this.getOfferingDetails();
   }
@@ -187,14 +176,13 @@ class Reservation extends React.Component {
     const {
       checkIn,
       checkOut,
-      openDateModalFunc,
       clearGuestsFunc,
     } = this.state;
 
     if (checkIn === '') {
-      openDateModalFunc('checkIn');
+      this.showDateModal('checkIn');
     } else if (checkOut === '') {
-      openDateModalFunc('checkOut');
+      this.showDateModal('checkOut');
     } else {
       controller.postReservationByOfferingId(this.buildReservation())
         .then(() => {
@@ -255,7 +243,7 @@ class Reservation extends React.Component {
     } = this.state;
 
     return (
-      <StyledReservation id="reservation" onClick={this.handleStrayClick}>
+      <StyledReservation id="reservation">
         <ReservationDetails
           pricePerDay={pricePerDay}
           averageRating={averageRating}

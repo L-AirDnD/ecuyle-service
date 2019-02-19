@@ -109,13 +109,17 @@ class GuestPicker extends React.Component {
     }
   }
 
-  handleModalCloseClick() {
+  handleModalCloseClick(e) {
+    console.log(e.target);
+    e.stopPropagation();
     this.closeModal();
   }
 
   showModal() {
     this.setState({
       modalShowing: true,
+    }, () => {
+      document.getElementById('guestModal').focus();
     });
   }
 
@@ -168,7 +172,7 @@ class GuestPicker extends React.Component {
 
   render() {
     return (
-      <Wrapper id="guestPicker">
+      <Wrapper id="guestPicker" tabIndex="0" onBlur={this.closeModal}>
         <Paragraph>
           Guests
         </Paragraph>
