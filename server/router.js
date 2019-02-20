@@ -7,6 +7,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
   const { query } = url.parse(req.url, true);
   if (Object.keys(query).length > 1 || query.offering === undefined) {
+    res.set('Access-Control-Allow-Origin', '*');
     res.statusCode = 400;
     res.send('Invalid parameter. This route currently only accepts an `offering` parameter');
   } else {
@@ -17,6 +18,7 @@ router.get('/', (req, res) => {
         res.send(reservations);
       })
       .catch((err) => {
+        res.set('Access-Control-Allow-Origin', '*');
         res.statusCode = 400;
         res.send(err);
       });
@@ -27,11 +29,12 @@ router.post('/', (req, res) => {
   const { body } = req;
   models.postReservation(body)
     .then((response) => {
-      res.set('Access-Control-Allow-Origin', '*');
       res.statusCode = 201;
+      res.set('Access-Control-Allow-Origin', '*');
       res.send(response);
     })
     .catch((err) => {
+      res.set('Access-Control-Allow-Origin', '*');
       res.statusCode = 400;
       res.send(err);
     });
@@ -45,6 +48,7 @@ router.get('/offerings/:offering', (req, res) => {
       res.send(offeringDetails);
     })
     .catch((err) => {
+      res.set('Access-Control-Allow-Origin', '*');
       res.statusCode = 400;
       res.send(err);
     });
