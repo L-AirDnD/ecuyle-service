@@ -16,6 +16,7 @@ const DateModal = (props) => {
     checkOut,
     handleClearDates,
     focus,
+    closeDateModal,
   } = props;
 
   const showClearDatesIfApplicable = () => {
@@ -32,7 +33,7 @@ const DateModal = (props) => {
   };
 
   return (
-    <Modal id="dateModal">
+    <Modal id="dateModal" tabIndex="0" onBlur={closeDateModal}>
       <Calendar
         focus={focus}
         reservations={reservations}
