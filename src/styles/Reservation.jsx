@@ -1,5 +1,6 @@
-import styled from 'styled-components';
 import { colors } from './common';
+
+const { styled } = window;
 
 const StyledReservation = styled.div`
   width: 350px;

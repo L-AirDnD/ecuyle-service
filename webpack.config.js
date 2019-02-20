@@ -15,7 +15,7 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env', '@babel/preset-react'],
-            plugins: ['babel-plugin-styled-components'],
+            plugins: [['@quickbaseoss/babel-plugin-styled-components-css-namespace', { ecuyle: 'reservation' }], 'babel-plugin-styled-components'],
           },
         },
       },
