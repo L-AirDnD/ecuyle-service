@@ -20,7 +20,7 @@ export const colors = {
 /*------------------------------------------*/
 export const Text = styled.p`
   color: ${colors.hof};
-  font-family: '-apple-system,BlinkMacSystemFont';
+  font-family: 'Roboto', Arial, sans-serif;
   font-weight: 400;
   margin: 0px;
   letter-spacing: 0.15px;
@@ -31,13 +31,13 @@ export const Title2 = styled(Text)`
   font-weight: 700;
   display: inline;
   margin-left: 4px;
-  font-family: 'Roboto-Bold', sans-serif;
+  font-family: 'Roboto-Bold', Arial, sans-serif;
 `;
 
 export const Title3 = styled(Text)`
   font-weight: 200;
   font-size: 16px;
-  font-family: 'Helvetica';
+  font-family: 'Helvetica', Arial, sans-serif;
 `;
 
 export const Title3Light = styled(Title3)`
@@ -50,7 +50,7 @@ export const Title3Dark = styled(Title3)`
 
 export const Title4 = styled(Text)`
   font-size: 14px;
-  font-family: '-apple-system,BlinkMacSystemFont';
+  font-family: 'Roboto', Arial, sans-serif;
   font-weight: 500;
   margin-bottom: 7px;
   line-height: 1.2857142857142858em;
@@ -65,7 +65,7 @@ export const CleanTitle4 = styled(Title4)`
 
 export const Title4Light = styled(Text)`
   font-size: 14px;
-  font-family: '-apple-system,BlinkMacSystemFont';
+  font-family: 'Roboto', Arial, sans-serif;
   font-weight: 300;
 `;
 
@@ -76,14 +76,14 @@ export const Title4Bold = styled(Title4Light)`
 export const CleanTitle4Light = styled(Title4Light)`
   margin: 5px 0 0 0;
   font-size: 14px;
-  font-family: '-apple-system,BlinkMacSystemFont';
+  font-family: 'Roboto', Arial, sans-serif;
   font-weight: 300;
   line-height: 1.2857142857142858em;
 `;
 
 export const Paragraph = styled(Text)`
   font-size: 12px;
-  font-family: '-apple-system,BlinkMacSystemFont';
+  font-family: 'Roboto', Arial, sans-serif;
   font-weight: 500;
   line-height: 1.333em;
   display: inline;
@@ -100,7 +100,7 @@ export const Stars = styled(Paragraph)`
 /*------------------------------------------*/
 export const StyledConfirmation = styled.button`
   color: ${colors.white};
-  font-family: '-apple-system,BlinkMacSystemFont';
+  font-family: 'Roboto', Arial, sans-serif;
   font-weight: 500;
   font-size: 16px;
   background-color: ${colors.rausch};
@@ -132,7 +132,7 @@ export const CircleButton = styled.div`
 
 export const StyledButtonText = styled.div`
   font-size: 16px;
-  font-family: '-apple-system,BlinkMacSystemFont';
+  font-family: 'Roboto', Arial, sans-serif;
   color: ${colors.babu};
   text-align: center;
 `;
@@ -149,7 +149,7 @@ export const LinkButton = styled.button`
   border: none;
   text-align: right;
   font-size: 16px;
-  font-family: 'Helvetica';
+  font-family: 'Helvetica', Arial, sans-serif;
   color: ${colors.babu};
   margin: 5px 15px 15px 15px;
   :hover {
