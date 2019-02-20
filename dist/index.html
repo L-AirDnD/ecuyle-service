@@ -10,10 +10,11 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     </head>
   <body>
-    <div id="reservation"></div>
-    
+    <div id="reservations"></div>
     <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/styled-components/dist/styled-components.min.js"></script>
+    
     <script src="http://localhost:3003/bundle.js"></script>
     <script>
       ReactDOM.render(
@@ -21,7 +22,7 @@
           offeringId: 4,
           guestId: 2,
         }),
-        document.getElementById('reservation')
+        document.getElementById('reservations')
       );
     </script>
   </body>
