@@ -12,6 +12,17 @@
   <body>
     <div id="reservation"></div>
     
-    <script src="bundle.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="http://localhost:3003/bundle.js"></script>
+    <script>
+      ReactDOM.render(
+        React.createElement(Reservation, {
+          offeringId: 4,
+          guestId: 2,
+        }),
+        document.getElementById('reservation')
+      );
+    </script>
   </body>
 </html>

@@ -139,7 +139,7 @@ class Calendar extends React.Component {
         <StyledCalendarTitle>
           <div>
             <StyledMonthDecrement onClick={this.handleMonthDecrement}>
-              <UpsideDownImg src="assets/right-arrow.svg" alt="right-arrow" height="15px" width="30px" />
+              <UpsideDownImg src="https://s3.us-east-2.amazonaws.com/lairdnd-reservations/right-arrow.svg" alt="right-arrow" height="15px" width="30px" />
             </StyledMonthDecrement>
           </div>
           <div>
@@ -149,7 +149,7 @@ class Calendar extends React.Component {
           </div>
           <div>
             <StyledMonthIncrement onClick={this.handleMonthIncrement}>
-              <img src="assets/right-arrow.svg" alt="right-arrow" height="15px" width="30px" />
+              <img src="https://s3.us-east-2.amazonaws.com/lairdnd-reservations/right-arrow.svg" alt="right-arrow" height="15px" width="30px" />
             </StyledMonthIncrement>
           </div>
         </StyledCalendarTitle>
