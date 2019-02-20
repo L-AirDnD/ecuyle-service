@@ -29,8 +29,9 @@ const ReservationDetails = (props) => {
     return padWithEmptyStars(stars);
   };
 
-  const { pricePerDay, averageRating, totalReviewCount } = props;
-
+  const { pricePerDay, averageRating } = props;
+  let { totalReviewCount } = props;
+  totalReviewCount = totalReviewCount || 0;
   return (
     <div>
       <Wrapper>

@@ -148,7 +148,7 @@ class DatePicker extends React.Component {
             { this.getCheckInComponent() }
           </StyledCheckIn>
           <StyledArrow>
-            <img src="assets/right-arrow.svg" alt="right-arrow" height="20px" width="50px" />
+            <img src="https://s3.us-east-2.amazonaws.com/lairdnd-reservations/right-arrow.svg" alt="right-arrow" height="20px" width="50px" />
           </StyledArrow>
           <StyledCheckOut>
             { this.getCheckOutComponent() }

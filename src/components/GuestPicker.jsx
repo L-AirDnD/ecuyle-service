@@ -42,8 +42,8 @@ class GuestPicker extends React.Component {
   getExpandArrowDirection() {
     const { modalShowing } = this.state;
     return !modalShowing
-      ? <img src="assets/down-arrow.svg" alt="expand more" height="18px" width="18px" />
-      : <UpsideDownImg src="assets/down-arrow.svg" alt="expand less" height="18px" width="18px" />;
+      ? <img src="https://s3.us-east-2.amazonaws.com/lairdnd-reservations/down-arrow.svg" alt="expand more" height="18px" width="18px" />
+      : <UpsideDownImg src="https://s3.us-east-2.amazonaws.com/lairdnd-reservations/down-arrow.svg" alt="expand less" height="18px" width="18px" />;
   }
 
   getModalIfAppropriate() {
