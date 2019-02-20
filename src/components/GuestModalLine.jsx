@@ -10,6 +10,7 @@ import {
   CircleButton,
   LockedCircleButton,
   CenteredWrapper,
+  StyledButtonText,
 } from '../styles/common';
 
 const GuestModalLine = (props) => {
@@ -27,13 +28,17 @@ const GuestModalLine = (props) => {
     if (count === min) {
       return (
         <LockedCircleButton id={`decrement${type}`} onClick={() => handleDecrement(type)}>
-          {innerText}
+          <StyledButtonText>
+            {innerText}
+          </StyledButtonText>
         </LockedCircleButton>
       );
     }
     return (
       <CircleButton id={`decrement${type}`} onClick={() => handleDecrement(type)}>
-        {innerText}
+        <StyledButtonText>
+          {innerText}
+        </StyledButtonText>
       </CircleButton>
     );
   };
@@ -42,13 +47,17 @@ const GuestModalLine = (props) => {
     if (count === max) {
       return (
         <LockedCircleButton id={`increment${type}`} onClick={() => handleIncrement(type)}>
-          {innerText}
+          <StyledButtonText>
+            {innerText}
+          </StyledButtonText>
         </LockedCircleButton>
       );
     }
     return (
       <CircleButton id={`increment${type}`} onClick={() => handleIncrement(type)}>
-        {innerText}
+        <StyledButtonText>
+          {innerText}
+        </StyledButtonText>
       </CircleButton>
     );
   };

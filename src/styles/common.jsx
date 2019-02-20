@@ -112,13 +112,9 @@ export const StyledConfirmation = styled.button`
   margin-bottom: 15px;
 `;
 
-export const CircleButton = styled.button`
+export const CircleButton = styled.div`
   border-radius: 50%;
   border: 1px solid ${colors.babu};
-  text-align: center;
-  font-size: 16px;
-  font-family: '-apple-system,BlinkMacSystemFont';
-  color: ${colors.babu};
   height: 30px;
   width: 30px;
   margin: 0 15px 0 15px;
@@ -126,6 +122,19 @@ export const CircleButton = styled.button`
     outline: none;
     box-shadow: 0 0 5px ${colors.babu};
   }
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const StyledButtonText = styled.div`
+  font-size: 16px;
+  font-family: '-apple-system,BlinkMacSystemFont';
+  color: ${colors.babu};
+  text-align: center;
 `;
 
 export const LockedCircleButton = styled(CircleButton)`
@@ -171,6 +180,10 @@ export const StyledLineShort = styled.div`
 export const Wrapper = styled.div`
   width: 100%;
   position: relative;
+  :hover {
+    outline: none;
+  }
+  outline: none;
 `;
 
 export const TopWrapper = styled.div`
@@ -278,6 +291,9 @@ export const Modal = styled.div`
   border-top: 2px solid ${colors.babu};
   border-radius: 3px;
   position: absolute;
+  :focus {
+    outline: none;
+  }
 `;
 
 export const GuestModalRow = styled.div`

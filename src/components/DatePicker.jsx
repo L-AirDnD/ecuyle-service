@@ -30,6 +30,7 @@ class DatePicker extends React.Component {
       checkOut,
       dateFocus,
       dateModalShowing,
+      closeDateModal,
     } = this.props;
     const { reservations } = this.props;
 
@@ -40,9 +41,9 @@ class DatePicker extends React.Component {
           reservations={reservations}
           checkIn={checkIn}
           checkOut={checkOut}
-          handleModalCloseClick={this.handleModalCloseClick}
           handleDayClick={this.handleDayClick}
           handleClearDates={this.handleClearDates}
+          closeDateModal={closeDateModal}
         />
       );
     }
