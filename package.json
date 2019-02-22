@@ -9,7 +9,7 @@
     "test:coverage": "npm run dbSetup && jest --coverage --colors || true",
     "start": "npm run seed && node server/server.js",
     "nstart": "nodemon server/server.js",
-    "build": "webpack -d --watch",
+    "build": "webpack --watch",
     "resetDB": "mysql --defaults-extra-file=server/creds.txt -h 0.0.0.0 -P 4001 < server/schema.sql",
     "seed": "node server/seeder.js",
     "dbSetup": "npm run resetDB & npm run seed"
