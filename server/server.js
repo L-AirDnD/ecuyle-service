@@ -9,8 +9,11 @@ const app = express();
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cors());
-app.use('/', express.static(path.join(__dirname, '../dist')));
+app.use(express.static(path.join(__dirname, '../dist')));
 app.use('/api/reservations', router);
+app.use('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
+});
 
 const PORT = process.env.PORT || 3003;
 

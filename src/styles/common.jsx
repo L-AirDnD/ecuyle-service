@@ -145,7 +145,7 @@ export const LockedCircleButton = styled(CircleButton)`
   }
 `;
 
-export const LinkButton = styled.button`
+export const LinkButton = styled.div`
   border: none;
   text-align: right;
   font-size: 16px;
