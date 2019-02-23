@@ -33,12 +33,6 @@ class GuestPicker extends React.Component {
     this.clearGuestCount = this.clearGuestCount.bind(this);
   }
 
-  componentDidMount() {
-    const { getCloseGuestModalFunc, getClearGuestsFunc } = this.props;
-    getCloseGuestModalFunc(this.closeModal);
-    getClearGuestsFunc(this.clearGuestCount);
-  }
-
   getExpandArrowDirection() {
     const { modalShowing } = this.state;
     return !modalShowing
@@ -48,12 +42,11 @@ class GuestPicker extends React.Component {
 
   getModalIfAppropriate() {
     const {
-      modalShowing, numAdults, numChildren, numInfants,
+      numAdults, numChildren, numInfants,
     } = this.state;
+    const { maxGuests, maxInfants, guestModalShowing } = this.props;
 
-    const { maxGuests, maxInfants } = this.props;
-
-    if (modalShowing) {
+    if (guestModalShowing) {
       return (
         <GuestModal
           numAdults={numAdults}
@@ -93,52 +86,21 @@ class GuestPicker extends React.Component {
   }
 
   clearGuestCount() {
+    const { clearParentGuestCount } = this.props;
     this.setState({
       numAdults: 1,
       numChildren: 0,
       numInfants: 0,
+    }, () => {
+      clearParentGuestCount(1, 0, 0);
     });
-  }
-
-  handleGuestPickerClick() {
-    const { modalShowing } = this.state;
-    if (modalShowing) {
-      this.closeModal();
-    } else {
-      this.showModal();
-    }
   }
 
   handleModalCloseClick(e) {
-    console.log(e.target);
     e.stopPropagation();
-    this.closeModal();
-  }
-
-  showModal() {
-    this.setState({
-      modalShowing: true,
-    }, () => {
-      document.getElementById('guestModal').focus();
-    });
-  }
-
-  closeModal() {
-    this.sendGuestDetailsToParent();
-    this.setState({
-      modalShowing: false,
-    });
-  }
-
-  sendGuestDetailsToParent() {
     const { numAdults, numChildren, numInfants } = this.state;
-    const { handleGuestModalClose } = this.props;
-    const guestDetails = {
-      numAdults,
-      numChildren,
-      numInfants,
-    };
-    handleGuestModalClose(guestDetails);
+    const { closeGuestModal } = this.props;
+    closeGuestModal(numAdults, numChildren, numInfants);
   }
 
   handleIncrement(type) {
@@ -171,12 +133,13 @@ class GuestPicker extends React.Component {
   }
 
   render() {
+    const { handleGuestPickerClick, closeGuestModal } = this.props;
     return (
-      <Wrapper id="guestPicker" tabIndex="0" onBlur={this.closeModal}>
+      <Wrapper id="guestPicker" tabIndex="0" onBlur={closeGuestModal}>
         <Paragraph>
           Guests
         </Paragraph>
-        <StyledGuests onClick={this.handleGuestPickerClick}>
+        <StyledGuests onClick={handleGuestPickerClick}>
           <StyledGuestLeft>
             { this.buildGuestCount() }
           </StyledGuestLeft>
@@ -194,18 +157,26 @@ GuestPicker.defaultProps = {
   numAdults: 1,
   numChildren: 0,
   numInfants: 0,
-  handleGuestModalClose: () => {},
   maxGuests: 1,
   maxInfants: 0,
+  clearParentGuestCount: () => {},
+  handleGuestPickerClick: () => {},
+  closeGuestModal: () => {},
+  guestModalShowing: () => {},
 };
 
 GuestPicker.propTypes = {
   numAdults: PropTypes.number,
   numChildren: PropTypes.number,
   numInfants: PropTypes.number,
-  handleGuestModalClose: PropTypes.func,
   maxGuests: PropTypes.number,
   maxInfants: PropTypes.number,
+  clearParentGuestCount: PropTypes.func,
+  handleGuestPickerClick: PropTypes.func,
+  closeGuestModal: PropTypes.func,
+  guestModalShowing: PropTypes.func,
+
+
 };
 
 export default GuestPicker;
