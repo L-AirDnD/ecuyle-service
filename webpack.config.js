@@ -6,6 +6,11 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
   },
+  mode: 'production',
+  externals: {
+    React: 'react',
+    ReactDOM: 'react-dom',
+  },
   module: {
     rules: [
       {
