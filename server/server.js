@@ -13,7 +13,7 @@ app.use(compression());
 app.use(cors());
 app.use(express.static(path.join(__dirname, '../dist')));
 app.use('/api/reservations', router);
-app.use('*', (req, res) => {
+app.get('/:id', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 

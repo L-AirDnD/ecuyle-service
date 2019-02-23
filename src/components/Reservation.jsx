@@ -26,6 +26,7 @@ class Reservation extends React.Component {
       numInfants: 0,
       datesSelected: false,
       dateModalShowing: false,
+      guestModalShowing: false,
       dateFocus: '',
       closeGuestModalFunc: () => {},
       clearGuestsFunc: () => {},
@@ -161,6 +162,14 @@ class Reservation extends React.Component {
     });
   }
 
+  showGuestModal() {
+    this.setState({
+      guestModalShowing: true,
+    }, () => {
+      document.getElementById('guestModal').focus();
+    });
+  }
+
   closeDateModal() {
     this.setState({
       dateModalShowing: false,
@@ -240,6 +249,7 @@ class Reservation extends React.Component {
       datesSelected,
       dateModalShowing,
       dateFocus,
+      guestModalShowing,
     } = this.state;
 
     return (
@@ -268,6 +278,7 @@ class Reservation extends React.Component {
           numAdults={numAdults}
           numChildren={numChildren}
           numInfants={numInfants}
+          guestModalShowing={guestModalShowing}
           handleGuestModalClose={this.handleGuestModalClose}
           getCloseGuestModalFunc={this.getCloseGuestModalFunc}
           getClearGuestsFunc={this.getClearGuestsFunc}
