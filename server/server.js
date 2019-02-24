@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const compression = require('compression');
+const favicon = require('serve-favicon');
 const router = require('./router.js');
 
 const app = express();
@@ -11,6 +12,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(compression());
 app.use(cors());
+app.use(favicon(path.join(__dirname, '../dist/client/assets/airbnb.ico')));
 app.use(express.static(path.join(__dirname, '../dist')));
 app.use('/api/reservations', router);
 app.get('/:id', (req, res) => {
