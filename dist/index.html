@@ -15,11 +15,16 @@
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/styled-components/dist/styled-components.min.js"></script>
     
-    <script src="http://localhost:3003/bundle.js"></script>
+    <script src="bundle.js"></script>
     <script>
+      let offeringId = window.location.pathname.slice(1);
+      if (typeof parseInt(offeringId) !== 'number' || parseInt(offeringId) > 100) {
+        window.location.href = '/1';
+      }
+      if (offeringId === '') offeringId = 1;
       ReactDOM.render(
         React.createElement(Reservation, {
-          offeringId: 4,
+          offeringId,
           guestId: 2,
         }),
         document.getElementById('reservations')

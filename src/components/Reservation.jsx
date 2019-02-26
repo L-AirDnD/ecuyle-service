@@ -26,14 +26,9 @@ class Reservation extends React.Component {
       numInfants: 0,
       datesSelected: false,
       dateModalShowing: false,
+      guestModalShowing: false,
       dateFocus: '',
-      closeGuestModalFunc: () => {},
-      clearGuestsFunc: () => {},
     };
-
-    this.handleGuestModalClose = this.handleGuestModalClose.bind(this);
-    this.getCloseGuestModalFunc = this.getCloseGuestModalFunc.bind(this);
-    this.getClearGuestsFunc = this.getClearGuestsFunc.bind(this);
 
     this.handleBookingClick = this.handleBookingClick.bind(this);
     this.clearDatePicker = this.clearDatePicker.bind(this);
@@ -41,7 +36,11 @@ class Reservation extends React.Component {
     this.setCheckOut = this.setCheckOut.bind(this);
     this.showDateModal = this.showDateModal.bind(this);
     this.closeDateModal = this.closeDateModal.bind(this);
+    this.showGuestModal = this.showGuestModal.bind(this);
+    this.closeGuestModal = this.closeGuestModal.bind(this);
+    this.handleGuestPickerClick = this.handleGuestPickerClick.bind(this);
     this.setDatePickerFocus = this.setDatePickerFocus.bind(this);
+    this.clearParentGuestCount = this.clearParentGuestCount.bind(this);
   }
 
   componentDidMount() {
@@ -72,18 +71,6 @@ class Reservation extends React.Component {
       .catch((err) => {
         throw err;
       });
-  }
-
-  getCloseGuestModalFunc(closeGuestModalFunc) {
-    this.setState({
-      closeGuestModalFunc,
-    });
-  }
-
-  getClearGuestsFunc(clearGuestsFunc) {
-    this.setState({
-      clearGuestsFunc,
-    });
   }
 
   setCheckIn(checkIn) {
@@ -143,21 +130,20 @@ class Reservation extends React.Component {
     return [availBeforeCheckIn, availAfterLatestCheckOut];
   }
 
-  handleGuestModalClose(guestDetails) {
-    const { numAdults, numChildren, numInfants } = guestDetails;
-    this.setState({
-      numAdults,
-      numChildren,
-      numInfants,
-    });
-  }
-
   showDateModal(dateFocus) {
     this.setState({
       dateModalShowing: true,
       dateFocus,
     }, () => {
       document.getElementById('dateModal').focus();
+    });
+  }
+
+  showGuestModal() {
+    this.setState({
+      guestModalShowing: true,
+    }, () => {
+      document.getElementById('guestModal').focus();
     });
   }
 
@@ -168,6 +154,32 @@ class Reservation extends React.Component {
     });
   }
 
+  closeGuestModal(numAdults, numChildren, numInfants) {
+    this.setState({
+      guestModalShowing: false,
+      numAdults,
+      numChildren,
+      numInfants,
+    });
+  }
+
+  clearParentGuestCount(numAdults, numChildren, numInfants) {
+    this.setState({
+      numAdults,
+      numChildren,
+      numInfants,
+    });
+  }
+
+  handleGuestPickerClick() {
+    const { guestModalShowing } = this.state;
+    if (guestModalShowing) {
+      this.closeGuestModal();
+    } else {
+      this.showGuestModal();
+    }
+  }
+
   clearDatePicker() {
     this.getOfferingDetails();
   }
@@ -176,7 +188,6 @@ class Reservation extends React.Component {
     const {
       checkIn,
       checkOut,
-      clearGuestsFunc,
     } = this.state;
 
     if (checkIn === '') {
@@ -186,7 +197,6 @@ class Reservation extends React.Component {
     } else {
       controller.postReservationByOfferingId(this.buildReservation())
         .then(() => {
-          clearGuestsFunc();
           this.getOfferingDetails();
         })
         .catch((err) => {
@@ -240,6 +250,7 @@ class Reservation extends React.Component {
       datesSelected,
       dateModalShowing,
       dateFocus,
+      guestModalShowing,
     } = this.state;
 
     return (
@@ -268,9 +279,11 @@ class Reservation extends React.Component {
           numAdults={numAdults}
           numChildren={numChildren}
           numInfants={numInfants}
-          handleGuestModalClose={this.handleGuestModalClose}
-          getCloseGuestModalFunc={this.getCloseGuestModalFunc}
-          getClearGuestsFunc={this.getClearGuestsFunc}
+          guestModalShowing={guestModalShowing}
+          showGuestModal={this.showGuestModal}
+          closeGuestModal={this.closeGuestModal}
+          clearParentGuestCount={this.clearParentGuestCount}
+          handleGuestPickerClick={this.handleGuestPickerClick}
         />
         <ReservationConfirmation
           datesSelected={datesSelected}

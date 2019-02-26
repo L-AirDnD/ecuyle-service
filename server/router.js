@@ -19,6 +19,7 @@ router.get('/', (req, res) => {
       })
       .catch((err) => {
         res.set('Access-Control-Allow-Origin', '*');
+        console.log(err);
         res.statusCode = 400;
         res.send(err);
       });
@@ -35,6 +36,7 @@ router.post('/', (req, res) => {
     })
     .catch((err) => {
       res.set('Access-Control-Allow-Origin', '*');
+      console.log(err);
       res.statusCode = 400;
       res.send(err);
     });
@@ -49,6 +51,7 @@ router.get('/offerings/:offering', (req, res) => {
     })
     .catch((err) => {
       res.set('Access-Control-Allow-Origin', '*');
+      console.log(err);
       res.statusCode = 400;
       res.send(err);
     });
